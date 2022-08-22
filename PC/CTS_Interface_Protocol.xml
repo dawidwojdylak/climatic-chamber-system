@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<commands>
+ <command name="read_time"> 
+  <value>T</value>
+ </command>
+ <command name="temperature">
+  <value>A0</value>
+ </command>
+ <command name="humidity">
+  <value>A1</value>
+ </command>
+ <command name="water_storage">
+  <value>A2</value>
+ </command>
+ <command name="temp_supply_air">
+  <value>A3</value>
+ </command>
+
+</commands>

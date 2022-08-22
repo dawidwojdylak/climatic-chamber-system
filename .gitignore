@@ -3,3 +3,5 @@ debug
 test
 temp
 *.out
+/__pycache__
+notatki.txt
