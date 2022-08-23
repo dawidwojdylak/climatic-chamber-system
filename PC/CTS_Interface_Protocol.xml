@@ -3,16 +3,16 @@
  <command name="read_time"> 
   <value>T</value>
  </command>
- <command name="temperature">
+ <command name="read_temperature">
   <value>A0</value>
  </command>
- <command name="humidity">
+ <command name="read_humidity">
   <value>A1</value>
  </command>
- <command name="water_storage">
+ <command name="read_water_storage">
   <value>A2</value>
  </command>
- <command name="temp_supply_air">
+ <command name="read_temp_supply_air">
   <value>A3</value>
  </command>
 

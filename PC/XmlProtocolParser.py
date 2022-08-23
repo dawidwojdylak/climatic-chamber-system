@@ -10,10 +10,8 @@ class XmlProtocolParser:
             self.tree = ET.parse(self.filePath)
             root = self.tree.getroot()
             if root.tag == "commands":
-                print(root)
                 for child in root:
                     self.commandsDict.update({child.attrib.get("name") : child.find("value").text})
-                print(self.commandsDict)
         except Exception as e:
             print("Exception: ", end='')
             print(e)
