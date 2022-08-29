@@ -7,5 +7,6 @@ if __name__ == "__main__":
 
     commands = xmlParser.getCommands()
     # commands["read_temperature"]
+    # print(sshSender.execCommand("pwd; mkdir t123; ls; ls"))
     if sshSender.checkConnection():
-        print(sshSender.execCommand("uptime"))
+        print(sshSender.execCommand("python3 .py arg"))

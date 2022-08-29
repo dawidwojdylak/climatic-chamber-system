@@ -3,5 +3,7 @@ debug
 test
 temp
 *.out
-/__pycache__
+/__pycache__/
 notatki.txt
+*.pyc
+PC/__pycache__/SshProtocolSender.cpython-310.pyc

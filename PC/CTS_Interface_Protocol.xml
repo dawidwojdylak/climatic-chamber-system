@@ -1,19 +1,230 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <commands>
- <command name="read_time"> 
-  <value>T</value>
- </command>
- <command name="read_temperature">
-  <value>A0</value>
- </command>
- <command name="read_humidity">
-  <value>A1</value>
- </command>
- <command name="read_water_storage">
-  <value>A2</value>
- </command>
- <command name="read_temp_supply_air">
-  <value>A3</value>
- </command>
+	<command name="read_time">
+		<description>Read time from the chamber clock.</description>
+		<request>
+			<argument>T</argument>
+		</request>
+		<response>
+			<argument>T</argument>
+			<argument descr="day">dd</argument>
+			<argument descr="month">MM</argument>
+			<argument descr="year">yy</argument>
+			<argument descr="hour">hh</argument>
+			<argument descr="minute">mm</argument>
+			<argument descr="second">ss</argument>
+		</response>
+	</command>
+
+	<command name="set_time">
+		<description>Set time for the chamber clock.</description>
+		<request>
+			<argument>t</argument>
+			<argument descr="day">dd</argument>
+			<argument descr="month">MM</argument>
+			<argument descr="year">yy</argument>
+			<argument descr="hour">hh</argument>
+			<argument descr="minute">mm</argument>
+			<argument descr="second">ss</argument>
+		</request>
+		<response>
+			<argument>t</argument>
+			<argument descr="day">dd</argument>
+			<argument descr="month">MM</argument>
+			<argument descr="year">yy</argument>
+			<argument descr="hour">hh</argument>
+			<argument descr="minute">mm</argument>
+			<argument descr="second">ss</argument>
+		</response>
+	</command>
+
+	<command name="read_temperature">
+		<request>
+			<argument>A</argument>
+			<argument>0</argument>
+		</request>
+		<response>
+			<argument>A</argument>
+			<argument>0</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="actual_value">yyy.y</argument>
+			<argument descr="set_value">zzz.z</argument>
+		</response>
+	</command>
+
+	<command name="read_humidity">
+		<request>
+			<argument>A</argument>
+			<argument>1</argument>
+		</request>
+		<response>
+			<argument>A</argument>
+			<argument>1</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="actual_value">yyy.y</argument>
+			<argument descr="set_value">zzz.z</argument>
+		</response>
+	</command>
+
+	<command name="read_water_storage">
+		<request>
+			<argument>A</argument>
+			<argument>2</argument>
+		</request>
+		<response>
+			<argument>A</argument>
+			<argument>2</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="actual_value">yyy.y</argument>
+			<argument descr="set_value">zzz.z</argument>
+		</response>
+	</command>
+
+	<command name="read_temp_supply_air">
+		<request>
+			<argument>A</argument>
+			<argument>3</argument>
+		</request>
+		<response>
+			<argument>A</argument>
+			<argument>3</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="actual_value">yyy.y</argument>
+			<argument descr="set_value">zzz.z</argument>
+		</response>
+	</command>
+
+	<command name="read_temp_exh_air">
+		<request>
+			<argument>A</argument>
+			<argument>4</argument>
+		</request>
+		<response>
+			<argument>A</argument>
+			<argument>4</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="actual_value">yyy.y</argument>
+			<argument descr="set_value">zzz.z</argument>
+		</response>
+	</command>
+
+	<command name="read_humid_suppl_air">
+		<request>
+			<argument>A</argument>
+			<argument>5</argument>
+		</request>
+		<response>
+			<argument>A</argument>
+			<argument>5</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="actual_value">yyy.y</argument>
+			<argument descr="set_value">zzz.z</argument>
+		</response>
+	</command>
+
+	<command name="read_humid_exh_air">
+		<request>
+			<argument>A</argument>
+			<argument>3</argument>
+		</request>
+		<response>
+			<argument>A</argument>
+			<argument>3</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="actual_value">yyy.y</argument>
+			<argument descr="set_value">zzz.z</argument>
+		</response>
+	</command>
+
+	<!-- to be configured -->
+	<command name="read_all_channels">
+		<request>
+			<argument>A</argument>
+			<argument>a</argument>
+		</request>
+		<response>
+			<!--  -->
+		</response>
+	</command>
+
+	<!-- TODO: Handle the error -->
+	<command name="set_temperature">
+		<request>
+			<argument>a</argument>
+			<argument>0</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="set_value" min="-75.00" max="185.00" unit="celc_deg" type="user_value">yyy.y</argument>
+		</request>
+		<response>
+			<argument>a</argument>
+			<error descr="channel_not_present">x</error>
+		</response>
+	</command>
+
+	<command name="set_humidity">
+		<request>
+			<argument>a</argument>
+			<argument>1</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="set_value" min="0.00" max="98.00" unit="per_cent_rH" type="user_value">yyy.y</argument>
+		</request>
+		<response>
+			<argument>a</argument>
+			<error descr="channel_not_present">x</error>
+		</response>
+	</command>
+
+	<command name="set_temperature_gradient_up">
+		<request>
+			<argument>u</argument>
+			<argument>1</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="set_value" min="0.00" max="" unit="K/min" type="user_value">yyy.y</argument>
+		</request>
+		<response>
+			<argument>u</argument>
+			<!-- <error descr="channel_not_present">x</error> -->
+		</response>
+	</command>
+
+	<command name="set_temperature_gradient_down">
+		<request>
+			<argument>d</argument>
+			<argument>1</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="set_value" min="0.00" max="" unit="K/min" type="user_value">yyy.y</argument>
+		</request>
+		<response>
+			<argument>u</argument>
+			<!-- <error descr="channel_not_present">x</error> -->
+		</response>
+	</command>
+
+	<command name="set_humidity_gradient_up">
+		<request>
+			<argument>u</argument>
+			<argument>2</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="set_value" min="0.00" max="" unit="K/min" type="user_value">yyy.y</argument>
+		</request>
+		<response>
+			<argument>u</argument>
+			<!-- <error descr="channel_not_present">x</error> -->
+		</response>
+	</command>
+
+	<command name="set_humidity_gradient_down">
+		<request>
+			<argument>d</argument>
+			<argument>2</argument>
+			<argument descr="blank">_</argument>
+			<argument descr="set_value" min="0.00" max="" unit="K/min" type="user_value">yyy.y</argument>
+		</request>
+		<response>
+			<argument>u</argument>
+			<!-- <error descr="channel_not_present">x</error> -->
+		</response>
+	</command>
+
 
 </commands>
