@@ -2,14 +2,14 @@ from ast import arg
 from tokenize import String
 
 class Argument:
-    def __init__(self, arg : String, argType : String = '', descr : String = '',
-    min : String = '', max : String = '', unit : String = ''):
+    def __init__(self, arg : String, argType : String = None, descr : String = None,
+    min : String = None, max : String = None, unit : String = None):
         self.arg    = arg
-        self.argType= argType       if argType != '' else None
-        self.descr  = descr         if descr != '' else None
-        self.min    = float(min)    if min   != '' else None
-        self.max    = float(max)    if max   != '' else None
-        self.unit   = unit          if unit  != '' else None
+        self.argType= argType       # if argType != '' else None
+        self.descr  = descr         # if descr != '' else None
+        self.min    = float(min) if min else None
+        self.max    = float(max) if max else None
+        self.unit   = unit          # if unit  != '' else None
 
     def __str__(self) -> str:
         if self.argType == "user_value" and (type(self.arg) != float or type(self.arg) != int):
@@ -35,12 +35,16 @@ class Command:
         self.name = name
         self.request = []
         self.response = []
+        self.description = ""
 
     def fillRequest(self, arg : Argument):
         self.request.append(arg)
 
     def fillResponse(self, arg : Argument):
         self.response.append(arg)
+
+    def fillDescription(self, descr : String):
+        self.description = descr
 
     # TODO: correctness check
     def prepareRequest(self):

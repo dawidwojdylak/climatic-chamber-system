@@ -7,3 +7,4 @@ temp
 notatki.txt
 *.pyc
 PC/__pycache__/SshProtocolSender.cpython-310.pyc
+PC/__pycache__/XmlProtocolParser.cpython-310.pyc
