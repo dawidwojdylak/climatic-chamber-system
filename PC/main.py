@@ -17,14 +17,14 @@ def importCommandsFromXml():
                         
                         if grandChild.tag == 'request':
                             for arg in grandChild:
-                                argument = Argument(arg.text, arg.attrib.get("user_value"),  
+                                argument = Argument(arg.text, arg.attrib.get("type"),  
                                 arg.attrib.get("descr"), arg.attrib.get("min"), 
                                 arg.attrib.get("max"), arg.attrib.get("unit"))
 
                                 command.fillRequest(argument)
                         if grandChild.tag == 'response':
                             for arg in grandChild:
-                                argument = Argument(arg.text, arg.attrib.get("user_value"),  
+                                argument = Argument(arg.text, arg.attrib.get("type"),  
                                 arg.attrib.get("descr"), arg.attrib.get("min"), 
                                 arg.attrib.get("max"), arg.attrib.get("unit"))
 
@@ -32,9 +32,14 @@ def importCommandsFromXml():
 
                     commands.append(command)
 
-    # print(commands)
+    print(commands)
     for i in range(len(commands)):
-        print(commands[i].name ,commands[i].prepareRequest())
+        # print(commands[i].name ,commands[i].prepareRequest(), commands[i].request[0])
+        if commands[i].name == 'set_humidity_gradient_up':
+            commands[i].setValue(29.23)
+
+    for i in range(len(commands)):
+        print(commands[i].name ,commands[i].prepareRequest(), commands[i].request[0])
 
 
 if __name__ == "__main__":

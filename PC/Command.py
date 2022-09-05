@@ -12,11 +12,11 @@ class Argument:
         self.unit   = unit          # if unit  != '' else None
 
     def __str__(self) -> str:
-        if self.argType == "user_value" and (type(self.arg) != float or type(self.arg) != int):
-            print("The value is not set!")
-            return None
-        else:
-            return self.arg
+        # if self.argType == "user_value" and (type(self.arg) != float or type(self.arg) != int):
+            # print("The value is not set!")
+            # return None
+        # else:
+        return self.arg
 
     def setValue(self, value):
         if self.argType == "user_value":
@@ -50,11 +50,23 @@ class Command:
     def prepareRequest(self):
         request = ""
         for arg in self.request:
-            if arg.argType == "user_value" and (type(self.arg) != float or type(self.arg) != int):
-                print("The value is not set!\nClearing request...")
-                return None
+            # if arg.argType == "user_value" and (type(arg.arg) != float or type(arg.arg) != int):
+                # print("The value is not set!\nClearing request...")
+                # return None
             request += str(arg)
         return request
+
+    # TODO: check how many arguments are to be changed
+    def setValue(self, value):
+        for arg in self.request:
+            if arg.argType == "user_value":
+                if arg.min != None and float(value) < arg.min:
+                    print("The value is too low. Min = " + str(arg.min))
+                    return
+                if arg.max != None and float(value) > arg.max:
+                    print("The value is too high. Max = " + str(arg.max))
+                    return
+                arg.arg = str(value)
 
 
 class CommandRead(Command):
