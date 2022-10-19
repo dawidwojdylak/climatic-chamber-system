@@ -4,7 +4,9 @@ from Command import *
 from Argument import *
 
 class XmlProtocolParser:
+    """Class containing parser for XML commands' protocol"""
     def __init__(self, filePath="C:\\Users\\446UXR\\Projects\\Praca_dyplomowa\\PC\\CTS_Interface_Protocol.xml"):
+        """The constructor takes path to the XML Commands file as an argument"""
         self.filePath = filePath
         self.commands = []
         self.tree = None
@@ -19,7 +21,8 @@ class XmlProtocolParser:
             print("Exception: ", end='')
             print(e)
 
-    def importCommandsFromXml(self):
+    def importCommandsFromXml(self) -> list[Command]:
+        """This metod parser XML into Commands (containing Arguments)"""
         root = self.root
 
         if root.tag == "commands":
@@ -35,14 +38,13 @@ class XmlProtocolParser:
                             argument = Argument(arg.text, arg.attrib.get("type"),  
                             arg.attrib.get("descr"), arg.attrib.get("min"), 
                             arg.attrib.get("max"), arg.attrib.get("unit"))
-
                             command.fillRequest(argument)
+
                     if grandChild.tag == 'response':
                         for arg in grandChild:
                             argument = Argument(arg.text, arg.attrib.get("type"),  
                             arg.attrib.get("descr"), arg.attrib.get("min"), 
                             arg.attrib.get("max"), arg.attrib.get("unit"))
-
                             command.fillResponse(argument)
 
                 self.commands.append(command)
@@ -52,6 +54,13 @@ class XmlProtocolParser:
         return self.commands
     def getRoot(self):
         return self.root
+
+    def getCommand(self, commandName: String):
+        """Returns the particular command"""
+        for com in self.commands:
+            if com.name == commandName:
+                return com
+        return None
 
 
 

@@ -1,6 +1,7 @@
 from tokenize import String
 
 class Argument:
+    """Class representing single argument within Command class string"""
     def __init__(self, arg : String, argType : String = None, descr : String = None,
     min : String = None, max : String = None, unit : String = None):
         self.arg    = arg
@@ -18,6 +19,7 @@ class Argument:
         return self.arg
 
     def setValue(self, value):
+        """Sets the value of user modifiable argument"""
         if self.argType == "user_value":
             if self.min != None and float(value) < self.min:
                 print("Value is too low!")

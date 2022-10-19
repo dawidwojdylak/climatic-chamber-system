@@ -1,8 +1,9 @@
 from XmlProtocolParser import *
 from SshProtocolSender import *
 
-
-
+# TODO:
+# - when reading value read also description of argument
+# - setting time value
 
 if __name__ == "__main__":
     xmlParser = XmlProtocolParser()
