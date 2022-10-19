@@ -1,36 +1,13 @@
 from XmlProtocolParser import *
 from SshProtocolSender import *
-from Command import *
 
-def importCommandsFromXml():
+
+
+
+if __name__ == "__main__":
     xmlParser = XmlProtocolParser()
-    commands = []
-    root = xmlParser.root
-
-    if root.tag == "commands":
-                for child in root:
-                    command = Command(child.attrib.get("name"))
-                    
-                    for grandChild in child:
-                        if grandChild.tag == 'description':
-                            command.fillDescription(grandChild.text)
-                        
-                        if grandChild.tag == 'request':
-                            for arg in grandChild:
-                                argument = Argument(arg.text, arg.attrib.get("type"),  
-                                arg.attrib.get("descr"), arg.attrib.get("min"), 
-                                arg.attrib.get("max"), arg.attrib.get("unit"))
-
-                                command.fillRequest(argument)
-                        if grandChild.tag == 'response':
-                            for arg in grandChild:
-                                argument = Argument(arg.text, arg.attrib.get("type"),  
-                                arg.attrib.get("descr"), arg.attrib.get("min"), 
-                                arg.attrib.get("max"), arg.attrib.get("unit"))
-
-                                command.fillResponse(argument)
-
-                    commands.append(command)
+    commands = xmlParser.importCommandsFromXml()
+    
 
     print(commands)
     for i in range(len(commands)):
@@ -41,9 +18,6 @@ def importCommandsFromXml():
     for i in range(len(commands)):
         print(commands[i].name ,commands[i].prepareRequest(), commands[i].request[0])
 
-
-if __name__ == "__main__":
-    xmlParser = XmlProtocolParser()
     # sshSender = SshProtocolSender()
 
     # commands = xmlParser.getCommands()
@@ -53,4 +27,4 @@ if __name__ == "__main__":
         # print(sshSender.execCommand("python3 .py arg"))
 
 
-    importCommandsFromXml()
+    # importCommandsFromXml()
