@@ -125,11 +125,11 @@
 	<command name="read_humid_exh_air">
 		<request>
 			<argument>A</argument>
-			<argument>3</argument>
+			<argument>6</argument>
 		</request>
 		<response>
 			<argument>A</argument>
-			<argument>3</argument>
+			<argument>6</argument>
 			<argument descr="blank"> </argument>
 			<argument descr="actual_value">yyy.y</argument>
 			<argument descr="set_value">zzz.z</argument>

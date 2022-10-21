@@ -2,8 +2,11 @@ from XmlProtocolParser import *
 from SshProtocolSender import *
 
 # TODO:
+# - class diagram (look for desing patterns)
+# - unit tests
 # - when reading value read also description of argument
 # - setting time value
+# - prepare wrong argument handling
 
 if __name__ == "__main__":
     xmlParser = XmlProtocolParser()

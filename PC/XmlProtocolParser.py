@@ -21,7 +21,7 @@ class XmlProtocolParser:
             print("Exception: ", end='')
             print(e)
 
-    def importCommandsFromXml(self) -> list[Command]:
+    def importCommandsFromXml(self):
         """This metod parser XML into Commands (containing Arguments)"""
         root = self.root
 
