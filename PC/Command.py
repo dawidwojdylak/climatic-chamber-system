@@ -1,6 +1,7 @@
 from ast import arg
 from tokenize import String
 import Argument
+import sys
 
 class Command:
     """Class containing Climatic Chamber commands as Argument objects sequences"""
@@ -27,12 +28,12 @@ class Command:
     def prepareRequest(self) -> String:
         """Returns ready-to-send request"""
         if self.badRequest == True:
-            print("Bad request")
+            sys.stderr.write("Bad request\n")
             return None
         request = ""
         for arg in self.request:
             # if arg.argType == "user_value" and (type(arg.arg) != float or type(arg.arg) != int):
-                # print("The value is not set!\nClearing request...")
+                # sys.stderr.write("The value is not set!\nClearing request...")
                 # return None
             request += str(arg)
         return request
@@ -47,11 +48,11 @@ class Command:
         for arg in self.request:
             if arg.argType == "user_value":
                 if arg.min != None and float(value) < arg.min:
-                    print("The value is too low. Min = " + str(arg.min))
+                    sys.stderr.write("The value is too low. Min = " + str(arg.min) + "\n")
                     self.badRequest = True
                     return
                 if arg.max != None and float(value) > arg.max:
-                    print("The value is too high. Max = " + str(arg.max))
+                    sys.stderr.write("The value is too high. Max = " + str(arg.max) + "\n")
                     self.badRequest = True
                     return
                 arg.arg = str(value)

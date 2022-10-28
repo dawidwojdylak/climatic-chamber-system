@@ -18,8 +18,8 @@ class XmlProtocolParser:
                 # for child in root:
                     # self.commandsDict.update({child.attrib.get("name") : child.find("request").text})
         except Exception as e:
-            print("Exception: ", end='')
-            print(e)
+            sys.stderr.write("Exception: ", end='')
+            sys.stderr.write(e)
 
     def importCommandsFromXml(self):
         """This metod parser XML into Commands (containing Arguments)"""

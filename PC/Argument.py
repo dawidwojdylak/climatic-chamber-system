@@ -1,4 +1,5 @@
 from tokenize import String
+import sys
 
 class Argument:
     """Class representing single argument within Command class string"""
@@ -13,7 +14,7 @@ class Argument:
 
     def __str__(self) -> str:
         # if self.argType == "user_value" and (type(self.arg) != float or type(self.arg) != int):
-            # print("The value is not set!")
+            # sys.stderr.write("The value is not set!\n")
             # return None
         # else:
         return self.arg
@@ -22,11 +23,11 @@ class Argument:
         """Sets the value of user modifiable argument"""
         if self.argType == "user_value":
             if self.min != None and float(value) < self.min:
-                print("Value is too low!")
+                sys.stderr.write("Value is too low!\n")
                 return
             if self.max != None and float(value) > self.max:
-                print("Value is too high!")
+                sys.stderr.write("Value is too high!\n")
                 return
             self.arg = value
         else:
-            print("Cannot set value for constant argument.")
+            sys.stderr.write("Cannot set value for constant argument.\n")
