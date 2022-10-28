@@ -179,7 +179,7 @@
 			<argument>u</argument>
 			<argument>1</argument>
 			<argument descr="blank"> </argument>
-			<argument descr="set_value" min="0.00" max="" unit="K/min" type="user_value">yyy.y</argument>
+			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
 			<argument>u</argument>
@@ -187,12 +187,13 @@
 		</response>
 	</command>
 
+	<!-- Upper limit?? -->
 	<command name="set_temperature_gradient_down">
 		<request>
 			<argument>d</argument>
 			<argument>1</argument>
 			<argument descr="blank"> </argument>
-			<argument descr="set_value" min="0.00" max="" unit="K/min" type="user_value">yyy.y</argument>
+			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
 			<argument>u</argument>
@@ -205,7 +206,7 @@
 			<argument>u</argument>
 			<argument>2</argument>
 			<argument descr="blank"> </argument>
-			<argument descr="set_value" min="0.00" max="" unit="K/min" type="user_value">yyy.y</argument>
+			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
 			<argument>u</argument>

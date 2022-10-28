@@ -5,7 +5,7 @@ from Argument import *
 
 class XmlProtocolParser:
     """Class containing parser for XML commands' protocol"""
-    def __init__(self, filePath="C:\\Users\\446UXR\\Projects\\Praca_dyplomowa\\PC\\CTS_Interface_Protocol.xml"):
+    def __init__(self, filePath="./CTS_Interface_Protocol.xml"):
         """The constructor takes path to the XML Commands file as an argument"""
         self.filePath = filePath
         self.commands = []

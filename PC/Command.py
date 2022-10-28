@@ -9,6 +9,7 @@ class Command:
         self.request = []
         self.response = []
         self.description = ""
+        self.badRequest = False
 
     def fillRequest(self, arg : Argument) -> None:
         """Appends Arguments to request command"""
@@ -25,6 +26,9 @@ class Command:
     # TODO: correctness check
     def prepareRequest(self) -> String:
         """Returns ready-to-send request"""
+        if self.badRequest == True:
+            print("Bad request")
+            return None
         request = ""
         for arg in self.request:
             # if arg.argType == "user_value" and (type(arg.arg) != float or type(arg.arg) != int):
@@ -44,11 +48,14 @@ class Command:
             if arg.argType == "user_value":
                 if arg.min != None and float(value) < arg.min:
                     print("The value is too low. Min = " + str(arg.min))
+                    self.badRequest = True
                     return
                 if arg.max != None and float(value) > arg.max:
                     print("The value is too high. Max = " + str(arg.max))
+                    self.badRequest = True
                     return
                 arg.arg = str(value)
+        self.badRequest = False
 
     def __str__(self) -> str:
         return self.prepareRequest()
