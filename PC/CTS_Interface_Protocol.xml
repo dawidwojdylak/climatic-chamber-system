@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: consider adding types for arguments -->
 <commands>
 	<command name="read_time">
 		<description>Read time from the chamber clock.</description>
@@ -228,5 +229,189 @@
 		</response>
 	</command>
 
+	<command name="read_temperature_gradient"> <!-- docs 4.6.5 -->
+		<request>
+			<argument>U</argument>
+			<argument>1</argument>
+		</request>
+		<response>
+			<argument>U</argument>
+			<argument>1</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_down_in_k_per_min">yyy.y</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_up_in_k_per_min">zzz.z</argument>
+		</response>
+	</command> 
+
+	<command name="read_humidity_gradient"> <!-- docs 4.6.5 -->
+		<request>
+			<argument>U</argument>
+			<argument>2</argument>
+		</request>
+		<response>
+			<argument>U</argument>
+			<argument>2</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_down_in_k_per_min">yyy.y</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_up_in_k_per_min">zzz.z</argument>
+		</response>
+	</command> 
+
+	<command name="read_adjusted_final_value_of_the_temperature_ramp"> <!-- docs 4.6.6 -->
+		<request>
+			<argument>E</argument>
+			<argument>1</argument>
+		</request>
+		<response>
+			<argument>E</argument>
+			<argument>1</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="final_value_of_ramp_in_fixed_format">yyy.y</argument>
+		</response>
+	</command> 
+
+	<command name="read_adjusted_final_value_of_the_humidity_ramp"> <!-- docs 4.6.6 -->
+		<request>
+			<argument>E</argument>
+			<argument>2</argument>
+		</request>
+		<response>
+			<argument>E</argument>
+			<argument>2</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="final_value_of_ramp_in_fixed_format">yyy.y</argument>
+		</response>
+	</command> 
+
+	<command name="read_temperature_ramp_parameters"> <!-- docs 4.6.7 -->
+		<request>
+			<argument>R</argument>
+			<argument>0</argument>
+		</request>
+		<response>
+			<argument>R</argument>
+			<argument>0</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not ;boolean type?? -->
+			<argument descr="ramp_management_runs">b</argument> <!--1 if runs, 0 if not -->
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_up_in_K_per_min">xxxx.xx</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_down_in_K_per_min">yyyy.yy</argument>
+		</response>
+	</command> 
+
+	<command name="read_humidity_ramp_parameters"> <!-- docs 4.6.7 -->
+		<request>
+			<argument>R</argument>
+			<argument>1</argument>
+		</request>
+		<response>
+			<argument>R</argument>
+			<argument>1</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not ;boolean type?? -->
+			<argument descr="ramp_management_runs">b</argument> <!--1 if runs, 0 if not -->
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_up_in_K_per_min">xxxx.xx</argument>
+			<argument descr="blank"> </argument>
+			<argument descr="value_set_for_ramping_down_in_K_per_min">yyyy.yy</argument>
+		</response>
+	</command> 
+
+	<!-- docs 4.7.2  -->
+	<!-- TODO: implement (nested) argument type with values
+	e.g.  -->
+	<!-- TODO: create responses -->
+	<command name="read_chamber_state">
+		<request>
+			<argument>S</argument>
+		</request>
+		<response>
+			<argument>S</argument>
+			<argument></argument>
+		</response>
+	</command>
+
+	<command name="switch_on_chamber">
+		<request>
+			<argument>s</argument>
+			<argument>1</argument>
+			<argument descr="blank"> </argument>
+			<argument>1</argument>
+		</request>
+		<response>
+		</response>
+	</command>
+
+	<command name="switch_off_chamber">
+		<request>
+			<argument>s</argument>
+			<argument>1</argument>
+			<argument descr="blank"> </argument>
+			<argument>0</argument>
+		</request>
+		<response>
+		</response>
+	</command>
+
+	<command name="pause_chamber">
+		<request>
+			<argument>s</argument>
+			<argument>3</argument>
+			<argument descr="blank"> </argument>
+			<argument>0</argument>
+		</request>
+		<response>
+		</response>
+	</command>
+
+	<command name="continue_chamber">
+		<request>
+			<argument>s</argument>
+			<argument>3</argument>
+			<argument descr="blank"> </argument>
+			<argument>1</argument>
+		</request>
+		<response>
+		</response>
+	</command>
+
+	<!-- check if this position is needed and would be used anytime -->
+	<!-- docs 4.9.2/3 -->
+	<command name="read_additional_digital_channels">
+		<request>
+			<argument>O</argument>
+		</request>
+		<response>
+			<argument>O</argument>
+			<argument>xyzm…ms…s</argument>
+		</response>
+	</command>
+
+	<command name="read_program_state">
+		<request>
+			<argument>P</argument>
+		</request>
+		<response>
+			<argument>P</argument>
+			<argument descr="number_of_currently_running_program">xxx</argument>
+			<!-- missing info: always in 3 digits, if 000 then mode OFF -->
+		</response>
+	</command>
+	
+	<!-- implement start/stop program? -->
+
+	<command name="read_error_text">
+		<request>
+			<argument>F</argument>
+		</request>
+		<response>
+			<argument>F</argument>
+			<argument desr="human_readable_error_text">text</argument>
+		</response>
+	</command>
 
 </commands>

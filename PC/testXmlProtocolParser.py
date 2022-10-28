@@ -133,47 +133,47 @@ class TestXmlParser(unittest.TestCase):
         self.xmlParser.getCommand("set_humidity_gradient_down").setValue("1000")
         assert self.xmlParser.getCommand("set_humidity_gradient_down").prepareRequest() == None # max value = 999.9  
 
-    # def test_read_temperature_gradient(self):
-    #     assert self.xmlParser.getCommand("read_temperature_gradient").prepareRequest() == "U1"
+    def test_read_temperature_gradient(self):
+        assert self.xmlParser.getCommand("read_temperature_gradient").prepareRequest() == "U1"
 
-    # def test_read_humidity_gradient(self):
-    #     assert self.xmlParser.getCommand("read_humidity_gradient").prepareRequest() == "U2"
+    def test_read_humidity_gradient(self):
+        assert self.xmlParser.getCommand("read_humidity_gradient").prepareRequest() == "U2"
 
-    # def test_read_adjusted_final_value_of_the_temperature_ramp(self):
-    #     assert self.xmlParser.getCommand("read_adjusted_final_value_of_the_temperature_ramp") == "E1"
+    def test_read_adjusted_final_value_of_the_temperature_ramp(self):
+        assert self.xmlParser.getCommand("read_adjusted_final_value_of_the_temperature_ramp").prepareRequest() == "E1"
 
-    # def test_read_adjusted_final_value_of_the_humidity_ramp(self):
-    #     assert self.xmlParser.getCommand("read_adjusted_final_value_of_the_humidity_ramp") == "E2"
+    def test_read_adjusted_final_value_of_the_humidity_ramp(self):
+        assert self.xmlParser.getCommand("read_adjusted_final_value_of_the_humidity_ramp").prepareRequest() == "E2"
 
-    # def test_read_temperature_ramp_parameters(self):
-    #     assert self.xmlParser.getCommand("read_temperature_ramp_parameters") == "R0"
+    def test_read_temperature_ramp_parameters(self):
+        assert self.xmlParser.getCommand("read_temperature_ramp_parameters").prepareRequest() == "R0"
 
-    # def test_read_humidity_ramp_parameters(self):
-    #     assert self.xmlParser.getCommand("read_humidity_ramp_parameters") == "R1"
+    def test_read_humidity_ramp_parameters(self):
+        assert self.xmlParser.getCommand("read_humidity_ramp_parameters").prepareRequest() == "R1"
 
-    # def test_read_chamber_state(self):
-    #     assert self.xmlParser.getCommand("read_chamber_state") == "S"
+    def test_read_chamber_state(self):
+        assert self.xmlParser.getCommand("read_chamber_state").prepareRequest() == "S"
 
-    # def test_switch_on_chamber(self):
-    #     assert self.xmlParser.getCommand("switch_on_chamber") == "s1 1"
+    def test_switch_on_chamber(self):
+        assert self.xmlParser.getCommand("switch_on_chamber").prepareRequest() == "s1 1"
 
-    # def test_switch_off_chamber(self):
-    #     assert self.xmlParser.getCommand("switch_off_chamber") == "s1 0"
+    def test_switch_off_chamber(self):
+        assert self.xmlParser.getCommand("switch_off_chamber").prepareRequest() == "s1 0"
 
-    # def test_pause_chamber(self):
-    #     assert self.xmlParser.getCommand("pause_chamber") == "s3 0"
+    def test_pause_chamber(self):
+        assert self.xmlParser.getCommand("pause_chamber").prepareRequest() == "s3 0"
 
-    # def test_continue_chamber(self):
-    #     assert self.xmlParser.getCommand("continue_chamber") == "s3 1"
+    def test_continue_chamber(self):
+        assert self.xmlParser.getCommand("continue_chamber").prepareRequest() == "s3 1"
 
-    # def test_read_additional_digital_channels(self):
-    #     assert self.xmlParser.getCommand("read_additional_digital_channels") == "O" # Docs 4.9.3
+    def test_read_additional_digital_channels(self):
+        assert self.xmlParser.getCommand("read_additional_digital_channels").prepareRequest() == "O" # Docs 4.9.3
 
-    # def test_read_program_state(self):
-    #     assert self.xmlParser.getCommand("read_program_state") == "P"
+    def test_read_program_state(self):
+        assert self.xmlParser.getCommand("read_program_state").prepareRequest() == "P"
 
-    # def test_read_error_text(self):
-    #     assert self.xmlParser.getCommand("read_error_text") == "F" # chamber returns error text
+    def test_read_error_text(self):
+        assert self.xmlParser.getCommand("read_error_text").prepareRequest() == "F" # chamber returns error text
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr)
