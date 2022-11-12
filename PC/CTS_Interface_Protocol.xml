@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- TODO: consider adding types for arguments -->
+<!-- - consider adding full names for displaying it in the GUI -->
 <commands>
 	<command name="read_time">
 		<description>Read time from the chamber clock.</description>

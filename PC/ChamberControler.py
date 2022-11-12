@@ -1,12 +1,15 @@
 import XmlProtocolParser as xml
 import SshProtocolSender as ssh
 
+# consider havind command list in controler instead of having names only
 class ChamberControler:
     def __init__(self, xmlConfigPath):
         self.xmlParser = xml.XmlProtocolParser(xmlConfigPath)
         self.xmlParser.importCommandsFromXml()
         self.commandList = self.xmlParser.getCommands()
         # self.sshSender = ssh.SshProtocolSender()
+
+        self.currentCommand = None
 
     def parseXml(self, xmlFilePath):
         self.xmlParser = xml.XmlProtocolParser(xmlFilePath)
@@ -17,6 +20,9 @@ class ChamberControler:
     def getCommandsNamesList(self):
         return [i.getName() for i in self.commandList]
 
+    def sendCommandToChamber(self, commandName : str):
+        command = self.xmlParser.getCommand(commandName)
+        
     
 
 
