@@ -20,7 +20,7 @@ class Command:
         """Append Arguments """
         self.response.append(arg)
 
-    def fillDescription(self, descr : String) -> None:
+    def fillDescription(self, descr : str) -> None:
         """Fills the argument description"""
         self.description = descr
 
@@ -58,8 +58,11 @@ class Command:
                 arg.arg = str(value)
         self.badRequest = False
 
-    def __str__(self) -> str:
-        return self.prepareRequest()
+    # def __str__(self) -> str:
+        # return self.prepareRequest()
+
+    def getName(self):
+        return self.name
     
 
 
