@@ -1,5 +1,8 @@
-from XmlProtocolParser import *
-from SshProtocolSender import *
+# from XmlProtocolParser import *
+# from SshProtocolSender import */
+from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+import UIControler
 
 # TODO:
 # - class diagram (look for desing patterns)
@@ -9,27 +12,8 @@ from SshProtocolSender import *
 # - prepare wrong argument handling
 # - response handling
 
+def setUp():
+    UIControler.setUpWindow()
+
 if __name__ == "__main__":
-    xmlParser = XmlProtocolParser()
-    commands = xmlParser.importCommandsFromXml()
-    
-
-    print(commands)
-    for i in range(len(commands)):
-        # print(commands[i].name ,commands[i].prepareRequest(), commands[i].request[0])
-        if commands[i].name == 'set_humidity_gradient_up':
-            commands[i].setValue(29.23)
-
-    for i in range(len(commands)):
-        print(commands[i].name ,commands[i].prepareRequest(), commands[i].request[0])
-
-    # sshSender = SshProtocolSender()
-
-    # commands = xmlParser.getCommands()
-    # commands["read_temperature"]
-    # print(sshSender.execCommand("pwd; mkdir t123; ls; ls"))
-    # if sshSender.checkConnection():
-        # print(sshSender.execCommand("python3 .py arg"))
-
-
-    # importCommandsFromXml()
+    setUp()    
