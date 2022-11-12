@@ -19,11 +19,16 @@ class ChamberControler:
 
     def getCommandsNamesList(self):
         return [i.getName() for i in self.commandList]
+    
+    def getCommands(self):
+        return self.commandList
 
     def sendCommandToChamber(self, commandName : str):
-        command = self.xmlParser.getCommand(commandName)
-        
+        pass        
     
+    def sendCommandToChamber(self, cmd):
+        request = cmd.prepareRequest()
+        print(request)
 
 
 if __name__ == "__main__":

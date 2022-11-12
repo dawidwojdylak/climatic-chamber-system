@@ -28,7 +28,7 @@ class XmlProtocolParser:
         if root.tag == "commands":
             for child in root:
                 command = Command(child.attrib.get("name"))
-                
+                command.setCommandType(child.attrib.get("type"))
                 for grandChild in child:
                     if grandChild.tag == 'description':
                         command.fillDescription(grandChild.text)

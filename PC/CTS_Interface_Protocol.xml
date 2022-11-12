@@ -18,7 +18,7 @@
 		</response>
 	</command>
 
-	<command name="set_time">
+	<command name="set_time" type="user_value">
 		<description>Set time for the chamber clock.</description>
 		<request>
 			<argument>t</argument>
@@ -151,7 +151,7 @@
 	</command>
 
 	<!-- TODO: Handle the error -->
-	<command name="set_temperature">
+	<command name="set_temperature" type="user_value">
 		<request>
 			<argument>a</argument>
 			<argument>0</argument>
@@ -164,7 +164,7 @@
 		</response>
 	</command>
 
-	<command name="set_humidity">
+	<command name="set_humidity" type="user_value">
 		<request>
 			<argument>a</argument>
 			<argument>1</argument>
@@ -177,7 +177,7 @@
 		</response>
 	</command>
 
-	<command name="set_temperature_gradient_up">
+	<command name="set_temperature_gradient_up" type="user_value">
 		<request>
 			<argument>u</argument>
 			<argument>1</argument>
@@ -191,7 +191,7 @@
 	</command>
 
 	<!-- Upper limit?? -->
-	<command name="set_temperature_gradient_down">
+	<command name="set_temperature_gradient_down" type="user_value">
 		<request>
 			<argument>d</argument>
 			<argument>1</argument>
@@ -204,12 +204,12 @@
 		</response>
 	</command>
 
-	<command name="set_humidity_gradient_up">
+	<command name="set_humidity_gradient_up" type="user_value">
 		<request>
 			<argument>u</argument>
 			<argument>2</argument>
 			<argument descr="blank"> </argument>
-			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
+			<argument descr="Gradient up value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
 			<argument>u</argument>
@@ -217,7 +217,7 @@
 		</response>
 	</command>
 
-	<command name="set_humidity_gradient_down">
+	<command name="set_humidity_gradient_down" type="user_value">
 		<request>
 			<argument>d</argument>
 			<argument>2</argument>

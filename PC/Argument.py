@@ -31,3 +31,6 @@ class Argument:
             self.arg = value
         else:
             sys.stderr.write("Cannot set value for constant argument.\n")
+
+    def getArgType(self):
+        return self.argType
