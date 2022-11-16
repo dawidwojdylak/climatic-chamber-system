@@ -32,7 +32,7 @@ class ChamberControler:
 
 
 if __name__ == "__main__":
-    cc = ChamberControler("/home/dawidwojdylak/Projects/mip_pr-climatic_chamber_system/PC/CTS_Interface_Protocol.xml")
+    cc = ChamberControler("./CTS_Interface_Protocol.xml")
     print("...ChamberControler...")
     testCommmandList = cc.getCommandsNamesList()
 

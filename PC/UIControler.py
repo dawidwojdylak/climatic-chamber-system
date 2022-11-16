@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 # from PySide2.QtCore import QObject, Signal, Slot 
 from MainWindow import Ui_MainWindow
 import ChamberControler 
+import Communicator
 import os
 
 # pyuic5 -x  -o
@@ -12,7 +13,7 @@ class UIControler(QtWidgets.QMainWindow):
         QtWidgets.QWidget.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.chamberControler = ChamberControler.ChamberControler("/home/dawidwojdylak/Projects/mip_pr-climatic_chamber_system/PC/CTS_Interface_Protocol.xml")
+        self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
         
         
         # user input table
@@ -25,6 +26,7 @@ class UIControler(QtWidgets.QMainWindow):
         # connects:
         self.ui.listWidget_commandList.itemClicked.connect(self.onCommandListItemClicked)
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
+        Communicator.printErrSignal.connect(self.onCommunicatorErrMsgReceived)
 
     def updateCommandList(self):
         commands = self.chamberControler.getCommands()
@@ -65,6 +67,9 @@ class UIControler(QtWidgets.QMainWindow):
         userValue = self.ui.tableWidget_userValue.item(0, 1).text()
         self.selectedCommand.setValue(userValue)
         self.chamberControler.sendCommandToChamber(self.selectedCommand)
+
+    def onCommunicatorErrMsgReceived(self, msg : str):
+        self.ui.statusbar.showMessage(msg, 3000)
 
     
 

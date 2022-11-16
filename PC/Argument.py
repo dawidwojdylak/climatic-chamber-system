@@ -1,5 +1,6 @@
 from tokenize import String
 import sys
+import Communicator
 
 class Argument:
     """Class representing single argument within Command class string"""
@@ -23,14 +24,14 @@ class Argument:
         """Sets the value of user modifiable argument"""
         if self.argType == "user_value":
             if self.min != None and float(value) < self.min:
-                sys.stderr.write("Value is too low!\n")
+                Communicator.eprint("Value is too low!")
                 return
             if self.max != None and float(value) > self.max:
-                sys.stderr.write("Value is too high!\n")
+                Communicator.eprint("Value is too high!")
                 return
             self.arg = value
         else:
-            sys.stderr.write("Cannot set value for constant argument.\n")
+            Communicator.eprint("Cannot set value for constant argument.")
 
     def getArgType(self):
         return self.argType
