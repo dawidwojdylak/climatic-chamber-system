@@ -2,10 +2,18 @@ import sys
 from PySide2.QtCore import QObject, Slot, Signal
 
 class Communicator(QObject):
-    @Signal
+    printErrSignal = Signal(str)
+    
+    def __init__(self):
+        super(Communicator, self).__init__()
+
+    # @Signal
     @staticmethod
     def eprint(msg : str):
-        printErrSignal.emit(msg)
+        Communicator.printErrSignal.emit(msg)
         # sys.stderr.write(msg + "\n")
-    printErrSignal = Signal(str)
+
+    # def eprint(self, msg : str):
+    #     self.printErrSignal.emit(msg)
+    #     # sys.stderr.write(msg + "\n")
 

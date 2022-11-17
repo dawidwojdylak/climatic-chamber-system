@@ -1,9 +1,9 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from PySide2.QtCore import QObject, Signal, Slot 
+from PySide2.QtCore import QObject, Signal, Slot 
 from MainWindow import Ui_MainWindow
 import ChamberControler 
-import Communicator
+from Communicator import Communicator
 import os
 
 # pyuic5 -x  -o
@@ -14,7 +14,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
-        
+        self.communicator = Communicator()
         
         # user input table
         self.ui.tableWidget_userValue.hide()
@@ -26,7 +26,7 @@ class UIControler(QtWidgets.QMainWindow):
         # connects:
         self.ui.listWidget_commandList.itemClicked.connect(self.onCommandListItemClicked)
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
-        Communicator.printErrSignal.connect(self.onCommunicatorErrMsgReceived)
+        self.communicator.printErrSignal.connect(self.onCommunicatorErrMsgReceived)
 
     def updateCommandList(self):
         commands = self.chamberControler.getCommands()
@@ -68,7 +68,9 @@ class UIControler(QtWidgets.QMainWindow):
         self.selectedCommand.setValue(userValue)
         self.chamberControler.sendCommandToChamber(self.selectedCommand)
 
+    @Slot(str)
     def onCommunicatorErrMsgReceived(self, msg : str):
+        print("slot str " + msg)
         self.ui.statusbar.showMessage(msg, 3000)
 
     

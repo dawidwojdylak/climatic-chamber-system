@@ -1,6 +1,6 @@
 from tokenize import String
 import sys
-import Communicator
+from Communicator import Communicator
 
 class Argument:
     """Class representing single argument within Command class string"""

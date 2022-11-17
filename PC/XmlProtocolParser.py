@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 from Command import *
 from Argument import *
-import Communicator
+from Communicator import Communicator
 
 class XmlProtocolParser:
     """Class containing parser for XML commands' protocol"""

@@ -2,7 +2,7 @@ from ast import arg
 from tokenize import String
 import Argument
 import sys
-import Communicator
+from Communicator import Communicator
 
 class Command:
     """Class containing Climatic Chamber commands as Argument objects sequences"""

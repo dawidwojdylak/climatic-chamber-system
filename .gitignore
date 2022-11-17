@@ -11,3 +11,5 @@ PC/__pycache__/XmlProtocolParser.cpython-310.pyc
 /Tests/
 PC/__pycache__/XmlProtocolParser.cpython-310.pyc
 *.png
+PC/.venv/
+.vscode/
