@@ -1,13 +1,14 @@
 import XmlProtocolParser as xml
 import SshProtocolSender as ssh
+import ChamberResponseSimulator as simulator
 
-# consider havind command list in controler instead of having names only
 class ChamberControler:
     def __init__(self, xmlConfigPath):
         self.xmlParser = xml.XmlProtocolParser(xmlConfigPath)
         self.xmlParser.importCommandsFromXml()
         self.commandList = self.xmlParser.getCommands()
         # self.sshSender = ssh.SshProtocolSender()
+        self.respSimulator = simulator.ResponseSimulator()
 
         self.currentCommand = None
 
@@ -28,7 +29,8 @@ class ChamberControler:
     
     def sendCommandToChamber(self, cmd):
         request = cmd.prepareRequest()
-        print(request)
+        response = self.respSimulator.sendCommand(request)
+        print(response)
 
 
 if __name__ == "__main__":

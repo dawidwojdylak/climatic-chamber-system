@@ -64,8 +64,15 @@ class UIControler(QtWidgets.QMainWindow):
 
     def onPushButton_sendCommandClicked(self):
         # currentCommand = self.chamberControler.getCommands()[self.selectedCommandIndex]
-        userValue = self.ui.tableWidget_userValue.item(0, 1).text()
-        self.selectedCommand.setValue(userValue)
+        # try to optimize this method
+        userValue = ''
+        try:
+            if self.ui.tableWidget_userValue.isVisible() and self.selectedCommand.isUserModifiable():
+                userValue = self.ui.tableWidget_userValue.item(0, 1).text()
+                self.selectedCommand.setValue(userValue)
+        except Exception as e:
+            self.onCommunicatorErrMsgReceived(str(e))
+            return 
         self.chamberControler.sendCommandToChamber(self.selectedCommand)
 
     @Slot(str)
@@ -80,7 +87,7 @@ def setUpWindow():
     uiC = UIControler()
     uiC.show()
     
-    uiC.updateCommandList() # should not be called here
+    uiC.updateCommandList() # should not be called here # create method for such functions
     
     sys.exit(app.exec_())
 
