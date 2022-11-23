@@ -49,7 +49,7 @@ class Command:
             
 
     # TODO: check how many arguments are to be changed
-    def setValue(self, value) -> None:
+    def setValue(self, value : float) -> None:
         """Sets value of argument with range check if needed"""
         try:
             for arg in self.request:
@@ -62,7 +62,7 @@ class Command:
                         Communicator.eprint("The value is too high. Max = " + str(arg.max))
                         self.badRequest = True
                         return
-                    arg.arg = str(value)
+                    arg.arg = '%.2f' % value
             self.badRequest = False
         except Exception as e:
             print(e)

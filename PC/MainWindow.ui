@@ -142,19 +142,30 @@
                   </sizepolicy>
                  </property>
                 </widget>
-                <widget class="QTableWidget" name="tableWidget_userValue">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>1</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>500</height>
-                  </size>
-                 </property>
+                <widget class="QWidget" name="verticalLayoutWidget">
+                 <layout class="QVBoxLayout" name="verticalLayout_userInput">
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_userInput1">
+                    <item>
+                     <widget class="QLabel" name="label_userInput1">
+                      <property name="text">
+                       <string>Value to set</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_userInput1">
+                      <property name="singleStep">
+                       <double>0.100000000000000</double>
+                      </property>
+                      <property name="stepType">
+                       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </widget>
                </widget>
               </item>

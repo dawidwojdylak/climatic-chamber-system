@@ -18,17 +18,18 @@
 		</response>
 	</command>
 
+<!-- 	
 	<command name="set_time" type="user_value">
 		<description>Set time for the chamber clock.</description>
 		<request>
 			<argument>t</argument>
 			<argument type="user_value">ddMMyyhhmmss</argument>
-			<!-- <argument descr="day">dd</argument>
+			<argument descr="day">dd</argument>
 			<argument descr="month">MM</argument>
 			<argument descr="year">yy</argument>
 			<argument descr="hour">hh</argument>
 			<argument descr="minute">mm</argument>
-			<argument descr="second">ss</argument> -->
+			<argument descr="second">ss</argument>
 		</request>
 		<response>
 			<argument>t</argument>
@@ -39,7 +40,7 @@
 			<argument descr="minute">mm</argument>
 			<argument descr="second">ss</argument>
 		</response>
-	</command>
+	</command> -->
 
 	<command name="read_temperature">
 		<request>
@@ -199,7 +200,7 @@
 			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
-			<argument>u</argument>
+			<argument>d</argument>
 			<!-- <error descr="channel_not_present">x</error> -->
 		</response>
 	</command>
@@ -225,7 +226,7 @@
 			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
-			<argument>u</argument>
+			<argument>d</argument>
 			<!-- <error descr="channel_not_present">x</error> -->
 		</response>
 	</command>

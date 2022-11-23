@@ -30,7 +30,8 @@ class ChamberControler:
     def sendCommandToChamber(self, cmd):
         request = cmd.prepareRequest()
         response = self.respSimulator.sendCommand(request)
-        print(response)
+        # TODO: prepare (parse) response
+        return response
 
 
 if __name__ == "__main__":
