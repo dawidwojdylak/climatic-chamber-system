@@ -31,7 +31,7 @@ class ChamberControler:
         request = cmd.prepareRequest()
         response = self.respSimulator.sendCommand(request)
         # TODO: prepare (parse) response
-        return response
+        return cmd.parseChamberResponse(response)
 
 
 if __name__ == "__main__":

@@ -1,11 +1,10 @@
-from tokenize import String
 import sys
 from Communicator import Communicator
 
 class Argument:
-    """Class representing single argument within Command class string"""
-    def __init__(self, arg : String, argType : String = None, descr : String = None,
-    min : String = None, max : String = None, unit : String = None):
+    """Class representing single argument within Command class str"""
+    def __init__(self, arg : str, argType : str = None, descr : str = None,
+    min : str = None, max : str = None, unit : str = None):
         self.arg    = arg
         self.argType= argType       # if argType != '' else None
         self.descr  = descr         # if descr != '' else None

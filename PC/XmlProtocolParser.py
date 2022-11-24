@@ -55,7 +55,7 @@ class XmlProtocolParser:
     def getRoot(self):
         return self.root
 
-    def getCommand(self, commandName: String):
+    def getCommand(self, commandName: str):
         """Returns the particular command"""
         for com in self.commands:
             if com.name == commandName:

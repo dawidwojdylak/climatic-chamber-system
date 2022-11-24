@@ -50,9 +50,10 @@
 		<response>
 			<argument>A</argument>
 			<argument>0</argument>
-			<argument descr="blank"> </argument>
-			<argument descr="actual_value">yyy.y</argument>
-			<argument descr="set_value">zzz.z</argument>
+			<argument type="blank"> </argument>
+			<argument descr="actual temperature">yyy.y</argument>
+			<argument type="blank"> </argument>
+			<argument descr="set temperature">zzz.z</argument>
 		</response>
 	</command>
 
@@ -64,8 +65,9 @@
 		<response>
 			<argument>A</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="actual_value">yyy.y</argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value">zzz.z</argument>
 		</response>
 	</command>
@@ -78,8 +80,9 @@
 		<response>
 			<argument>A</argument>
 			<argument>2</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="actual_value">yyy.y</argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value">zzz.z</argument>
 		</response>
 	</command>
@@ -92,8 +95,9 @@
 		<response>
 			<argument>A</argument>
 			<argument>3</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="actual_value">yyy.y</argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value">zzz.z</argument>
 		</response>
 	</command>
@@ -106,8 +110,9 @@
 		<response>
 			<argument>A</argument>
 			<argument>4</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="actual_value">yyy.y</argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value">zzz.z</argument>
 		</response>
 	</command>
@@ -120,8 +125,9 @@
 		<response>
 			<argument>A</argument>
 			<argument>5</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="actual_value">yyy.y</argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value">zzz.z</argument>
 		</response>
 	</command>
@@ -134,8 +140,9 @@
 		<response>
 			<argument>A</argument>
 			<argument>6</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="actual_value">yyy.y</argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value">zzz.z</argument>
 		</response>
 	</command>
@@ -156,7 +163,7 @@
 		<request>
 			<argument>a</argument>
 			<argument>0</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value" min="-75.00" max="185.00" unit="celc_deg" type="user_value">yyy.y</argument>
 		</request>
 		<response>
@@ -169,7 +176,7 @@
 		<request>
 			<argument>a</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value" min="0.00" max="98.00" unit="per_cent_rH" type="user_value">yyy.y</argument>
 		</request>
 		<response>
@@ -182,7 +189,7 @@
 		<request>
 			<argument>u</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
@@ -196,7 +203,7 @@
 		<request>
 			<argument>d</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
@@ -209,7 +216,7 @@
 		<request>
 			<argument>u</argument>
 			<argument>2</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="Gradient up value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
@@ -222,7 +229,7 @@
 		<request>
 			<argument>d</argument>
 			<argument>2</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="set_value" min="0.00" max="999.9" unit="K/min" type="user_value">yyy.y</argument>
 		</request>
 		<response>
@@ -239,9 +246,9 @@
 		<response>
 			<argument>U</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_down_in_k_per_min">yyy.y</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_up_in_k_per_min">zzz.z</argument>
 		</response>
 	</command> 
@@ -254,9 +261,9 @@
 		<response>
 			<argument>U</argument>
 			<argument>2</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_down_in_k_per_min">yyy.y</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_up_in_k_per_min">zzz.z</argument>
 		</response>
 	</command> 
@@ -269,7 +276,7 @@
 		<response>
 			<argument>E</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="final_value_of_ramp_in_fixed_format">yyy.y</argument>
 		</response>
 	</command> 
@@ -282,7 +289,7 @@
 		<response>
 			<argument>E</argument>
 			<argument>2</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="final_value_of_ramp_in_fixed_format">yyy.y</argument>
 		</response>
 	</command> 
@@ -295,12 +302,12 @@
 		<response>
 			<argument>R</argument>
 			<argument>0</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not ;boolean type?? -->
 			<argument descr="ramp_management_runs">b</argument> <!--1 if runs, 0 if not -->
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_up_in_K_per_min">xxxx.xx</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_down_in_K_per_min">yyyy.yy</argument>
 		</response>
 	</command> 
@@ -313,12 +320,12 @@
 		<response>
 			<argument>R</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not ;boolean type?? -->
 			<argument descr="ramp_management_runs">b</argument> <!--1 if runs, 0 if not -->
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_up_in_K_per_min">xxxx.xx</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_down_in_K_per_min">yyyy.yy</argument>
 		</response>
 	</command> 
@@ -341,7 +348,7 @@
 		<request>
 			<argument>s</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument>1</argument>
 		</request>
 		<response>
@@ -352,7 +359,7 @@
 		<request>
 			<argument>s</argument>
 			<argument>1</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument>0</argument>
 		</request>
 		<response>
@@ -363,7 +370,7 @@
 		<request>
 			<argument>s</argument>
 			<argument>3</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument>0</argument>
 		</request>
 		<response>
@@ -374,7 +381,7 @@
 		<request>
 			<argument>s</argument>
 			<argument>3</argument>
-			<argument descr="blank"> </argument>
+			<argument type="blank"> </argument>
 			<argument>1</argument>
 		</request>
 		<response>

@@ -90,9 +90,13 @@ class UIControler(QtWidgets.QMainWindow):
             self.onCommunicatorErrMsgReceived(str(e))
             return 
         response = self.chamberControler.sendCommandToChamber(self.selectedCommand)
-        self.ui.textBrowser_chamberResponse.clear()
-        self.ui.textBrowser_chamberResponse.setText(response)
-
+        textWindow = self.ui.textBrowser_chamberResponse 
+        textWindow.clear()
+        for key, value in response.items():
+            textWindow.setFontWeight(50)
+            textWindow.insertPlainText(key + ": ")
+            textWindow.setFontWeight(100)
+            textWindow.insertPlainText(value + "\n")
     @Slot(str)
     def onCommunicatorErrMsgReceived(self, msg : str):
         print("slot str " + msg)

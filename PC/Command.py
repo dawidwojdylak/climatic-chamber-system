@@ -1,5 +1,4 @@
 from ast import arg
-from tokenize import String
 import Argument
 import sys
 from Communicator import Communicator
@@ -31,7 +30,7 @@ class Command:
         self.userModifiable = True if cmdType == "user_value" else False
 
     # TODO: correctness check
-    def prepareRequest(self) -> String:
+    def prepareRequest(self) -> str:
         """Returns ready-to-send request"""
         if self.badRequest == True:
             Communicator.eprint("Bad request")
@@ -44,8 +43,23 @@ class Command:
             request += str(arg)
         return request
 
-    # def encodeResponse(self, response : String):
-        # for arg in self.response:
+    def parseChamberResponse(self, resp : str):
+        i = 0
+        result = {}
+        try:
+            for arg in self.response:
+                temp_str = ""
+                if i >= len(resp): break
+                for _ in arg.arg:
+                    temp_str += resp[i]
+                    i += 1
+                if arg.descr != None:
+                    result[arg.descr] = temp_str
+            return result
+        except Exception as e:
+            print(str(e))
+
+
             
 
     # TODO: check how many arguments are to be changed
