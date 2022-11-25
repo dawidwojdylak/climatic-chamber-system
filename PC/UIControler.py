@@ -5,6 +5,8 @@ from PySide2.QtCore import QObject, Signal, Slot
 from MainWindow import Ui_MainWindow
 import ChamberControler 
 from Communicator import Communicator
+import pyqtgraph as pg
+import numpy as np
 import os
 
 # pyuic5 -x  -o
@@ -16,7 +18,12 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
         self.communicator = Communicator()
+        self.graphWidget = pg.GraphicsLayoutWidget(show=True)
         
+        # plot
+        self.ui.verticalLayout.addWidget(self.graphWidget)
+        self.setUpPlot()
+
         # user input widget
         self.setVisibleUserInput(False)
 
@@ -35,6 +42,29 @@ class UIControler(QtWidgets.QMainWindow):
             item = QtWidgets.QListWidgetItem(c.getName().replace("_", " "))
             item.setToolTip(c.getDescription())
             self.ui.listWidget_commandList.addItem(item)
+
+    def setUpPlot(self):
+        # embed and set up graph widget
+        self.graphWidget.setBackground('#272f36')
+        # self.graphWidget.showGrid(x=True, y=True)
+
+        self.plotLabel = pg.LabelItem(justify='right')
+        self.graphWidget.addItem(self.plotLabel)
+
+        self.plot = self.graphWidget.addPlot(row=1, col=0)
+        self.plot.avgPen = pg.mkPen('#FFFFFF')
+        self.plot.avgShadowPen = pg.mkPen('#8080DD', width=10)
+
+        self.plotvLine = pg.InfiniteLine(angle=90, movable=False)
+        self.plothLine = pg.InfiniteLine(angle=0, movable=False)
+        self.plot.addItem(self.plotvLine, ignoreBounds=True)
+        self.plot.addItem(self.plothLine, ignoreBounds=True)
+
+        self.plot.addLegend()
+        self.plot.setYRange(-40, 100, padding=None, update=False)
+        self.plot.showGrid(True, True, .5)
+
+        self.plot.scene().sigMouseMoved.connect(self.onGraphMouseHoverUpdateStatusBar)
 
     # @Slot(str)
     def printErrorToStatusBar(self, msg : str):
@@ -93,6 +123,17 @@ class UIControler(QtWidgets.QMainWindow):
             textWindow.insertPlainText(key + ": ")
             textWindow.setFontWeight(100)
             textWindow.insertPlainText(value + "\n")
+
+    def onGraphMouseHoverUpdateStatusBar(self, evt):
+        pos = evt
+        if self.plot.sceneBoundingRect().contains(pos):
+            mousePoint = self.plot.vb.mapSceneToView(pos)
+            index = int(mousePoint.x())
+            # if index > 0:  #and index < len(data1):
+            self.plotLabel.setText("<span style='font-size: 12pt'>t=%0.2f[s],\t<span style='color: red'>y=%0.2f</span>" % (mousePoint.x(), mousePoint.y()))
+            self.plotvLine.setPos(mousePoint.x())
+            self.plothLine.setPos(mousePoint.y())
+
     @Slot(str)
     def onCommunicatorErrMsgReceived(self, msg : str):
         print("slot str " + msg)
