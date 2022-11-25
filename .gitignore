@@ -13,3 +13,7 @@ PC/__pycache__/XmlProtocolParser.cpython-310.pyc
 *.png
 PC/.venv/
 .vscode/
+PC/ui_MainWindow.py
+PC/UIControler.py
+PC/MainWindow.ui.autosave
+PC/requirements.txt

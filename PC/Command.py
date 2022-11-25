@@ -60,8 +60,6 @@ class Command:
             print(str(e))
 
 
-            
-
     # TODO: check how many arguments are to be changed
     def setValue(self, value : float) -> None:
         """Sets value of argument with range check if needed"""
@@ -104,8 +102,6 @@ class CommandRead(Command):
 class CommandSet(Command):
     def __init__(self):
         pass
-
-
 
 if __name__ == "__main__":
     arg1 = Argument("T", '', "-2.3", "32.1")

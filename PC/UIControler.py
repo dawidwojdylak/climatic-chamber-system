@@ -1,5 +1,6 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets 
+from PyQt5.QtGui import QKeySequence
 from PySide2.QtCore import QObject, Signal, Slot 
 from MainWindow import Ui_MainWindow
 import ChamberControler 
@@ -20,9 +21,11 @@ class UIControler(QtWidgets.QMainWindow):
         self.setVisibleUserInput(False)
 
         # connects:
-        self.ui.listWidget_commandList.itemClicked.connect(self.onCommandListItemClicked)
+        self.ui.listWidget_commandList.itemSelectionChanged.connect(self.onCommandListItemClicked)
+        self.ui.listWidget_commandList.itemDoubleClicked.connect(self.onPushButton_sendCommandClicked)
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
         self.communicator.printErrSignal.connect(self.onCommunicatorErrMsgReceived)
+        QtWidgets.QShortcut(QKeySequence('Ctrl+Q'), self).activated.connect(QtWidgets.QApplication.instance().quit)
 
     def updateCommandList(self):
         commands = self.chamberControler.getCommands()
@@ -38,22 +41,13 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.statusbar.showMessage(str, 2000)
 
     def setVisibleUserInput(self, val : bool):
-        for i in range(self.ui.verticalLayout_userInput.count()):
-            layout = self.ui.verticalLayout_userInput.itemAt(i).layout()
-            if layout:
-                for j in range(layout.count()):
-                    item = layout.itemAt(j).widget()
-                    if item:
-                        item.setVisible(val)
-        if val:
-            self.ui.splitter.setStretchFactor(0, 5)
-            self.ui.splitter.setStretchFactor(1, 1)
-        else:
-            self.ui.splitter.setStretchFactor(0, 1)
-            self.ui.splitter.setStretchFactor(1, 0)
+        layout = self.ui.horizontalLayout_userInput1
+        for j in range(layout.count()):
+            item = layout.itemAt(j).widget()
+            if item:
+                item.setVisible(val)
+
             
-        # TODO: fix sizes
-        # print(self.ui.splitter.sizes())
         
     
     def onCommandListItemClicked(self):
@@ -90,6 +84,8 @@ class UIControler(QtWidgets.QMainWindow):
             self.onCommunicatorErrMsgReceived(str(e))
             return 
         response = self.chamberControler.sendCommandToChamber(self.selectedCommand)
+        if type(response) != dict:
+            return
         textWindow = self.ui.textBrowser_chamberResponse 
         textWindow.clear()
         for key, value in response.items():
