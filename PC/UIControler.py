@@ -9,6 +9,7 @@ import pyqtgraph as pg
 import numpy as np
 import os
 from ChartView import ChartView
+from Chart import Chart
 
 # pyuic5 -x  -o
 
@@ -20,35 +21,11 @@ class UIControler(QtWidgets.QMainWindow):
         self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
         self.communicator = Communicator()
         
-        self.chartView = ChartView()
         self.chart = QtChart.QChart()
-        
-        self.chartView.installEventFilter(self)
-        self.lineSeriesTemp = QtChart.QLineSeries()
-        self.lineSeriesHumid = QtChart.QLineSeries()
-        self.lineSeriesHumid.pressed.connect(self.onCommandListItemClicked)
-        self.scatterSeriesTemp = QtChart.QScatterSeries()
-        self.scatterSeriesHumid = QtChart.QScatterSeries()
-
+        self.chart = Chart()
+        self.chartView = ChartView(self.chart)
         self.chartView.setChart(self.chart)
-        self.chart.addSeries(self.lineSeriesTemp)
-        self.chart.addSeries(self.lineSeriesHumid)
-        self.chart.addSeries(self.scatterSeriesTemp)
-        self.chart.addSeries(self.scatterSeriesHumid)
-
-        self.xAxis = QtChart.QValueAxis()
-        self.xAxis.setMin(0)
-        self.xAxis.setMax(100)
-        # self.xAxis.set
-        self.chart.addAxis(self.xAxis, QtCore.Qt.AlignBottom)
-
-        self.yAxis = QtChart.QValueAxis()
-        self.yAxis.setMin(-40.)
-        self.yAxis.setMax(80.)
-        self.yAxis.setTickInterval(10.)
-        self.chart.addAxis(self.yAxis, QtCore.Qt.AlignLeft)
-
-        self.yAxis = QtChart.QValueAxis
+        
 
         self.ui.verticalLayout.addWidget(self.chartView)
         self.setUpPlot()
@@ -153,22 +130,6 @@ class UIControler(QtWidgets.QMainWindow):
     def onMousePressed(self):
         print("mouse pressed")
 
-    # def eventFilter(self, obj, ev):
-    #     if (ev.type() == QtCore.QEvent.HoverMove):
-    #         print("hover")
-    #         return True
-    #     if (ev.type() == QtCore.QEvent.MouseButtonPress):
-    #         print("press")
-    #         return True
-    #     if (ev.type() == QtCore.QEvent.MouseButtonRelease):
-    #         print("release")
-    #         return True
-    #     if (ev.type() == QtCore.QEvent.MouseMove):
-    #         print("mouse move")
-    #         return True
-
-    #     return False
-    
 
 def setUpWindow():
     app = QtWidgets.QApplication(sys.argv)

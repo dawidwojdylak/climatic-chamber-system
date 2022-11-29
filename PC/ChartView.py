@@ -1,12 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, QtChart
 
 class ChartView(QtChart.QChartView):
-    def __init__(self, chart):
-        super().__init__(self)
+    def __init__(self, chart = None):
+        QtChart.QChartView.__init__(self)
         self.chart = chart
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        print("mmove")
+        # print("mmove")
         return super().mouseMoveEvent(event)
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
