@@ -1,7 +1,7 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets 
+from PyQt5 import QtCore, QtGui, QtWidgets, QtChart
 from PyQt5.QtGui import QKeySequence
-from PySide2.QtCore import QObject, Signal, Slot 
+from PySide2.QtCore import QObject, Signal, Slot
 from MainWindow import Ui_MainWindow
 import ChamberControler 
 from Communicator import Communicator
@@ -18,10 +18,37 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
         self.communicator = Communicator()
-        self.graphWidget = pg.GraphicsLayoutWidget(show=True)
         
-        # plot
-        self.ui.verticalLayout.addWidget(self.graphWidget)
+        self.chartView = QtChart.QChartView()
+        self.chart = QtChart.QChart()
+        self.chartView.installEventFilter(self)
+        self.lineSeriesTemp = QtChart.QLineSeries()
+        self.lineSeriesHumid = QtChart.QLineSeries()
+        self.lineSeriesHumid.pressed.connect(self.onCommandListItemClicked)
+        self.scatterSeriesTemp = QtChart.QScatterSeries()
+        self.scatterSeriesHumid = QtChart.QScatterSeries()
+
+        self.chartView.setChart(self.chart)
+        self.chart.addSeries(self.lineSeriesTemp)
+        self.chart.addSeries(self.lineSeriesHumid)
+        self.chart.addSeries(self.scatterSeriesTemp)
+        self.chart.addSeries(self.scatterSeriesHumid)
+
+        self.xAxis = QtChart.QValueAxis()
+        self.xAxis.setMin(0)
+        self.xAxis.setMax(100)
+        # self.xAxis.set
+        self.chart.addAxis(self.xAxis, QtCore.Qt.AlignBottom)
+
+        self.yAxis = QtChart.QValueAxis()
+        self.yAxis.setMin(-40.)
+        self.yAxis.setMax(80.)
+        self.yAxis.setTickInterval(10.)
+        self.chart.addAxis(self.yAxis, QtCore.Qt.AlignLeft)
+
+        self.yAxis = QtChart.QValueAxis
+
+        self.ui.verticalLayout.addWidget(self.chartView)
         self.setUpPlot()
 
         # user input widget
@@ -44,27 +71,9 @@ class UIControler(QtWidgets.QMainWindow):
             self.ui.listWidget_commandList.addItem(item)
 
     def setUpPlot(self):
+        pass
         # embed and set up graph widget
-        self.graphWidget.setBackground('#272f36')
-        # self.graphWidget.showGrid(x=True, y=True)
 
-        self.plotLabel = pg.LabelItem(justify='right')
-        self.graphWidget.addItem(self.plotLabel)
-
-        self.plot = self.graphWidget.addPlot(row=1, col=0)
-        self.plot.avgPen = pg.mkPen('#FFFFFF')
-        self.plot.avgShadowPen = pg.mkPen('#8080DD', width=10)
-
-        self.plotvLine = pg.InfiniteLine(angle=90, movable=False)
-        self.plothLine = pg.InfiniteLine(angle=0, movable=False)
-        self.plot.addItem(self.plotvLine, ignoreBounds=True)
-        self.plot.addItem(self.plothLine, ignoreBounds=True)
-
-        self.plot.addLegend()
-        self.plot.setYRange(-40, 100, padding=None, update=False)
-        self.plot.showGrid(True, True, .5)
-
-        self.plot.scene().sigMouseMoved.connect(self.onGraphMouseHoverUpdateStatusBar)
 
     # @Slot(str)
     def printErrorToStatusBar(self, msg : str):
@@ -139,6 +148,21 @@ class UIControler(QtWidgets.QMainWindow):
         print("slot str " + msg)
         self.ui.statusbar.showMessage(msg, 3000)
 
+    def eventFilter(self, obj, ev):
+        if (ev.type() == QtCore.QEvent.HoverMove):
+            print("hover")
+            return True
+        if (ev.type() == QtCore.QEvent.MouseButtonPress):
+            print("press")
+            return True
+        if (ev.type() == QtCore.QEvent.MouseButtonRelease):
+            print("release")
+            return True
+        if (ev.type() == QtCore.QEvent.MouseMove):
+            print("mouse move")
+            return True
+
+        return False
     
 
 def setUpWindow():
