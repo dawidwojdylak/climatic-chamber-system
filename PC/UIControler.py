@@ -8,6 +8,7 @@ from Communicator import Communicator
 import pyqtgraph as pg
 import numpy as np
 import os
+from ChartView import ChartView
 
 # pyuic5 -x  -o
 
@@ -19,8 +20,9 @@ class UIControler(QtWidgets.QMainWindow):
         self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
         self.communicator = Communicator()
         
-        self.chartView = QtChart.QChartView()
+        self.chartView = ChartView()
         self.chart = QtChart.QChart()
+        
         self.chartView.installEventFilter(self)
         self.lineSeriesTemp = QtChart.QLineSeries()
         self.lineSeriesHumid = QtChart.QLineSeries()
@@ -148,21 +150,24 @@ class UIControler(QtWidgets.QMainWindow):
         print("slot str " + msg)
         self.ui.statusbar.showMessage(msg, 3000)
 
-    def eventFilter(self, obj, ev):
-        if (ev.type() == QtCore.QEvent.HoverMove):
-            print("hover")
-            return True
-        if (ev.type() == QtCore.QEvent.MouseButtonPress):
-            print("press")
-            return True
-        if (ev.type() == QtCore.QEvent.MouseButtonRelease):
-            print("release")
-            return True
-        if (ev.type() == QtCore.QEvent.MouseMove):
-            print("mouse move")
-            return True
+    def onMousePressed(self):
+        print("mouse pressed")
 
-        return False
+    # def eventFilter(self, obj, ev):
+    #     if (ev.type() == QtCore.QEvent.HoverMove):
+    #         print("hover")
+    #         return True
+    #     if (ev.type() == QtCore.QEvent.MouseButtonPress):
+    #         print("press")
+    #         return True
+    #     if (ev.type() == QtCore.QEvent.MouseButtonRelease):
+    #         print("release")
+    #         return True
+    #     if (ev.type() == QtCore.QEvent.MouseMove):
+    #         print("mouse move")
+    #         return True
+
+    #     return False
     
 
 def setUpWindow():

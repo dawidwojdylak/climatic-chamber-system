@@ -17,3 +17,5 @@ PC/ui_MainWindow.py
 PC/UIControler.py
 PC/MainWindow.ui.autosave
 PC/requirements.txt
+PC/chart_test.py
+PC/test.py
