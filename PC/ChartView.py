@@ -2,10 +2,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets, QtChart
 from PySide2.QtCore import Slot, Signal
 
 class ChartView(QtChart.QChartView):
-    # mouseMovedSignal = Signal(float, float)
-    def __init__(self, chart = None):
+    def __init__(self, chart = None, parent = None):
         QtChart.QChartView.__init__(self)
         self.chart = chart
+        self.parent = parent
         # If true draw humidity, if not draw temperature
         self.humidityOptionChecked = True 
         
@@ -14,10 +14,11 @@ class ChartView(QtChart.QChartView):
         sPos = self.mapToScene(int(wPos.x()), int(wPos.y()))
         chartItemPos = self.mapFromScene(sPos)
         self.currentCursorPosOnChart = self.chart.mapToValue(chartItemPos)
-        # self.mouseMovedSignal.emit(
-        #     round(self.currentCursorPosOnChart.x(), 1), 
-        #         round(self.currentCursorPosOnChart.y(),1)
-        # )
+        
+        self.parent.onMouseOnChartMoved(
+            round(self.currentCursorPosOnChart.x(), 1), 
+                round(self.currentCursorPosOnChart.y(),1)
+        )
         return super().mouseMoveEvent(event)
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
@@ -27,7 +28,6 @@ class ChartView(QtChart.QChartView):
                 round(self.currentCursorPosOnChart.y(),1),
                 self.humidityOptionChecked)
 
-        # self.mouseMovedSignal.emit(1,2)
         return super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
@@ -36,4 +36,3 @@ class ChartView(QtChart.QChartView):
     @Slot(bool)
     def humidityOptionChecked1(self, val):
         self.humidityOptionChecked = val
-        

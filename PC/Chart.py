@@ -7,6 +7,7 @@ class Chart(QtChart.QChart):
 
         self.tempPoints = []
         self.humidPoints = []
+        self.scatterEnable = True
 
         self.lineSeriesTemp = QtChart.QLineSeries()
         self.lineSeriesHumid = QtChart.QLineSeries()
@@ -58,10 +59,12 @@ class Chart(QtChart.QChart):
 
         for i in self.tempPoints:
             self.lineSeriesTemp << i
-            self.scatterSeriesTemp << i
+            if self.scatterEnable:
+                self.scatterSeriesTemp << i
         for i in self.humidPoints:
             self.lineSeriesHumid << i
-            self.scatterSeriesTemp << i
+            if self.scatterEnable:
+                self.scatterSeriesHumid << i
         
         self.update()
 
@@ -84,5 +87,10 @@ class Chart(QtChart.QChart):
     def clearChart(self):
         self.tempPoints.clear()
         self.humidPoints.clear()
+        self.updatePoints()
+
+    @Slot() 
+    def scatterEnabled(self, enabled : bool):
+        self.scatterEnable = enabled
         self.updatePoints()
             

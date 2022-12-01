@@ -23,7 +23,7 @@ class UIControler(QtWidgets.QMainWindow):
         
         self.chart = QtChart.QChart()
         self.chart = Chart()
-        self.chartView = ChartView(self.chart)
+        self.chartView = ChartView(self.chart, self)
         self.chartView.setChart(self.chart)
         self.ui.verticalLayout.addWidget(self.chartView)
 
@@ -41,6 +41,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.tabWidget.currentChanged.connect(self.setVisibleChartRadioButtons)
         self.ui.pushButton.clicked.connect(self.onPushButtonClicked)
         self.ui.pushButton_chartClear.clicked.connect(self.chart.clearChart)
+        self.ui.checkBox_chartScatter.clicked.connect(self.chart.scatterEnabled)
         # self.chartView.mouseMovedSignal.connect(self.onMouseOnChartMoved)
 
 
@@ -132,10 +133,9 @@ class UIControler(QtWidgets.QMainWindow):
             self.plotvLine.setPos(mousePoint.x())
             self.plothLine.setPos(mousePoint.y())
 
-    # @Slot(float, float)
-    # def onMouseOnChartMoved(self, x : float, y : float):
-    #     text = 'x: %2.1f, y: %2.1f' % (x, y)
-    #     # self.ui.label_chartMousePos.setText(text)
+    def onMouseOnChartMoved(self, x : float, y : float):
+        text = 'x: %2.1f, y: %2.1f' % (x, y)
+        self.ui.label_chartMousePos.setText(text)
 
 
     @Slot(str)
