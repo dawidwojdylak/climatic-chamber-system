@@ -40,6 +40,8 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.radioButton_chartHumidity.toggled.connect(self.chartView.humidityOptionChecked1)
         self.ui.tabWidget.currentChanged.connect(self.setVisibleChartRadioButtons)
         self.ui.pushButton.clicked.connect(self.onPushButtonClicked)
+        self.ui.pushButton_chartClear.clicked.connect(self.chart.clearChart)
+        # self.chartView.mouseMovedSignal.connect(self.onMouseOnChartMoved)
 
 
     def updateCommandList(self):
@@ -69,6 +71,8 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.label_chart.setVisible(val)
         self.ui.radioButton_chartHumidity.setVisible(val)
         self.ui.radioButton_chartTemperature.setVisible(val)
+        self.ui.pushButton_chartClear.setVisible(val)
+        self.ui.label_chartMousePos.setVisible(val)
 
     
     def onCommandListItemClicked(self):
@@ -127,6 +131,12 @@ class UIControler(QtWidgets.QMainWindow):
             self.plotLabel.setText("<span style='font-size: 12pt'>t=%0.2f[s],\t<span style='color: red'>y=%0.2f</span>" % (mousePoint.x(), mousePoint.y()))
             self.plotvLine.setPos(mousePoint.x())
             self.plothLine.setPos(mousePoint.y())
+
+    # @Slot(float, float)
+    # def onMouseOnChartMoved(self, x : float, y : float):
+    #     text = 'x: %2.1f, y: %2.1f' % (x, y)
+    #     # self.ui.label_chartMousePos.setText(text)
+
 
     @Slot(str)
     def onCommunicatorErrMsgReceived(self, msg : str):

@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, QtChart
+from PySide2.QtCore import Slot 
 
 class Chart(QtChart.QChart):
     def __init__(self):
@@ -71,3 +72,17 @@ class Chart(QtChart.QChart):
             self.lineSeriesHumid << QtCore.QPointF(i, i) 
 
         self.update()
+    
+    def addPoint(self, x : float, y : float, isHumid : bool):
+        if isHumid:
+            self.addHumidPoint(QtCore.QPointF(x, y))
+        else:
+            self.addTempPoint(QtCore.QPointF(x, y))
+        self.updatePoints()
+
+    @Slot()
+    def clearChart(self):
+        self.tempPoints.clear()
+        self.humidPoints.clear()
+        self.updatePoints()
+            
