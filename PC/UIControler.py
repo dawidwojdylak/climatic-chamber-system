@@ -74,6 +74,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.radioButton_chartTemperature.setVisible(val)
         self.ui.pushButton_chartClear.setVisible(val)
         self.ui.label_chartMousePos.setVisible(val)
+        self.ui.checkBox_chartScatter.setVisible(val)
 
     
     def onCommandListItemClicked(self):

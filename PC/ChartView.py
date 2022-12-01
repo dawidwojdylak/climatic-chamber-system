@@ -14,7 +14,12 @@ class ChartView(QtChart.QChartView):
         sPos = self.mapToScene(int(wPos.x()), int(wPos.y()))
         chartItemPos = self.mapFromScene(sPos)
         self.currentCursorPosOnChart = self.chart.mapToValue(chartItemPos)
-        
+
+        self.currentCursorPosOnChart = QtCore.QPointF(
+            round(2 * self.currentCursorPosOnChart.x()) / 2,
+            round(2 * self.currentCursorPosOnChart.y()) / 2,
+        )
+
         self.parent.onMouseOnChartMoved(
             round(self.currentCursorPosOnChart.x(), 1), 
                 round(self.currentCursorPosOnChart.y(),1)

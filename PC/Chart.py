@@ -44,10 +44,18 @@ class Chart(QtChart.QChart):
 
 
     def addHumidPoint(self, point : QtCore.QPointF):
+        HOR_TOL = 2
+        if len(self.humidPoints) > 0:
+            if abs(self.humidPoints[-1].y() - point.y()) <= HOR_TOL:
+                point.setY(self.humidPoints[-1].y())
         self.humidPoints.append(point)
         self.updatePoints()
 
     def addTempPoint(self, point : QtCore.QPointF):
+        HOR_TOL = 2
+        if len(self.tempPoints) > 0:
+            if abs(self.tempPoints[-1].y() - point.y()) <= HOR_TOL:
+                point.setY(self.tempPoints[-1].y())
         self.tempPoints.append(point)
         self.updatePoints()
 
