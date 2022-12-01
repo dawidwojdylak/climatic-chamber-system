@@ -25,13 +25,11 @@ class UIControler(QtWidgets.QMainWindow):
         self.chart = Chart()
         self.chartView = ChartView(self.chart)
         self.chartView.setChart(self.chart)
-        
-
         self.ui.verticalLayout.addWidget(self.chartView)
-        self.setUpPlot()
 
         # user input widget
         self.setVisibleUserInput(False)
+        self.ui.radioButton_chartHumidity.setChecked(True)
 
         # connects:
         self.ui.listWidget_commandList.itemSelectionChanged.connect(self.onCommandListItemClicked)
@@ -39,6 +37,10 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
         self.communicator.printErrSignal.connect(self.onCommunicatorErrMsgReceived)
         QtWidgets.QShortcut(QKeySequence('Ctrl+Q'), self).activated.connect(QtWidgets.QApplication.instance().quit)
+        self.ui.radioButton_chartHumidity.toggled.connect(self.chartView.humidityOptionChecked1)
+        self.ui.tabWidget.currentChanged.connect(self.setVisibleChartRadioButtons)
+        self.ui.pushButton.clicked.connect(self.onPushButtonClicked)
+
 
     def updateCommandList(self):
         commands = self.chamberControler.getCommands()
@@ -48,10 +50,6 @@ class UIControler(QtWidgets.QMainWindow):
             item = QtWidgets.QListWidgetItem(c.getName().replace("_", " "))
             item.setToolTip(c.getDescription())
             self.ui.listWidget_commandList.addItem(item)
-
-    def setUpPlot(self):
-        pass
-        # embed and set up graph widget
 
 
     # @Slot(str)
@@ -65,8 +63,13 @@ class UIControler(QtWidgets.QMainWindow):
             if item:
                 item.setVisible(val)
 
-            
-        
+    def setVisibleChartRadioButtons(self, val):
+        val = True if val == 0 else 0 # 0 is index of chart tab
+        self.ui.line_chart.setVisible(val)
+        self.ui.label_chart.setVisible(val)
+        self.ui.radioButton_chartHumidity.setVisible(val)
+        self.ui.radioButton_chartTemperature.setVisible(val)
+
     
     def onCommandListItemClicked(self):
         selectedCommandIndex = self.ui.listWidget_commandList.currentRow() 
@@ -111,6 +114,9 @@ class UIControler(QtWidgets.QMainWindow):
             textWindow.insertPlainText(key + ": ")
             textWindow.setFontWeight(100)
             textWindow.insertPlainText(value + "\n")
+        
+    def onPushButtonClicked(self):
+        self.chart.test()
 
     def onGraphMouseHoverUpdateStatusBar(self, evt):
         pos = evt
@@ -127,17 +133,12 @@ class UIControler(QtWidgets.QMainWindow):
         print("slot str " + msg)
         self.ui.statusbar.showMessage(msg, 3000)
 
-    def onMousePressed(self):
-        print("mouse pressed")
-
 
 def setUpWindow():
     app = QtWidgets.QApplication(sys.argv)
     uiC = UIControler()
     uiC.show()
-    
-    uiC.updateCommandList() # should not be called here # create method for such functions
-    
+    uiC.updateCommandList() 
     sys.exit(app.exec_())
 
 
