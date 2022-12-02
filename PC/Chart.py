@@ -25,7 +25,7 @@ class Chart(QtChart.QChart):
         self.xAxis = QtChart.QValueAxis()
         self.xAxis.setMin(0)
         self.xAxis.setMax(100)
-        self.xAxis.setTitleText("Time [s]")
+        self.xAxis.setTitleText("Time [min]")
         self.addAxis(self.xAxis, QtCore.Qt.AlignBottom)
 
         self.yAxis = QtChart.QValueAxis()
@@ -50,6 +50,22 @@ class Chart(QtChart.QChart):
         self.lineSeriesHumid.clear()
         self.scatterSeriesTemp.clear()
         self.scatterSeriesHumid.clear()
+
+        # tempPoints = []
+        # for i in self.tempPoints:
+        #     x = QtCore.QDateTime()
+        #     x.setDate(QtCore.QDate(0, 0, 0))
+        #     x.setTime(QtCore.QTime(0, i.x()))
+        #     tempPoints.append(QtCore.QPointF(x, i.y()))
+
+        # humidPoints = []
+        # for i in self.humidPoints:
+        #     x = QtCore.QDateTime()
+        #     x.setDate(QtCore.QDate(0, 0, 0))
+        #     x.setTime(QtCore.QTime(0, i.x()))
+        #     humidPoints.append(QtCore.QPointF(x, i.y()))
+        #     print(humidPoints)
+
 
         for i in self.tempPoints:
             self.lineSeriesTemp << i
@@ -104,7 +120,11 @@ class Chart(QtChart.QChart):
         else:
             self.addTempPoint(QtCore.QPointF(x, y))
         self.updateDelta()
-        self.drawPoints()
+
+    def zoom(self, factor: float) -> None:
+        super().zoom(factor)
+        self.yAxis.setMin(-40.)
+        self.yAxis.setMax(80.)
 
     
     @Slot(bool)

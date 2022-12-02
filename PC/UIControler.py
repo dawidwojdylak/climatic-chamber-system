@@ -145,7 +145,7 @@ class UIControler(QtWidgets.QMainWindow):
         if d < 0:
             self.ui.label_chartDeltaT.setText('')
             return
-        text = 'delta t: %2.1f' % (d)
+        text = 'delta t: %.1f [min]' % (d)
         self.ui.label_chartDeltaT.setText(text)
 
 

@@ -7,6 +7,7 @@ class ChartView(QtChart.QChartView):
         self.chart = chart
         self.parent = parent
         self.zoomFactor = 1.
+        self.ctrlClicked = False
         
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         wPos = event.localPos()
@@ -37,46 +38,23 @@ class ChartView(QtChart.QChartView):
         return super().mouseReleaseEvent(event)
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
-        # self.chart.zoomReset()
-        # dx = 1.
-        # dx *= .5 if event.angleDelta().x() > 0 else 2.
-        # rect = self.chart.plotArea()
-        # cent = self.chart.plotArea().center()
-        # rect.setWidth(dx * rect.width())
-        # rect.moveCenter(cent)
-        # self.chart.zoomIn(rect)
+        if self.ctrlClicked:
+            factor = event.angleDelta().y()
+            factor = .8 if factor > 0 else 1.2
+            self.chart.zoom(factor)
 
-        # event.accept()
-        
-        # self.chart.zoomReset()
-        
-        self.zoomFactor += 1. if event.angleDelta().y() > 0 else -1.
-        if self.zoomFactor >= 3.: 
-            self.zoomFactor = 3.
-            return 
-
-        width = self.chart.plotArea().width()
-        if self.zoomFactor > 0:
-            width = self.chart.plotArea().width() / self.zoomFactor
-        elif self.zoomFactor < 0:
-            width = self.chart.plotArea().width() * -self.zoomFactor
-
-        rect = QtCore.QRectF(
-            self.chart.plotArea().left(), 
-            self.chart.plotArea().top(),
-            width, 
-            self.chart.plotArea().height()
-        )
-
-        print(self.zoomFactor)
-        if self.zoomFactor > 0:
-            self.chart.zoomIn(rect)
-        elif self.zoomFactor < 0:
-            self.chart.zoomReset() 
-            self.chart.zoomIn(rect)
-
-        # factor = event.angleDelta().y()
-        # factor = .5 if factor > 0 else 2.
-        # self.chart.zoom(factor)
+        else: 
+            self.chart.scroll(self.chart.plotArea().width() / (50*120) * event.angleDelta().y(), 0)
 
         return super().wheelEvent(event)
+
+    def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
+        if event.key() == QtCore.Qt.Key_Control:
+            self.ctrlClicked = True
+        return super().keyPressEvent(event)
+
+
+    def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
+        if event.key() == QtCore.Qt.Key_Control:
+            self.ctrlClicked = False
+        return super().keyReleaseEvent(event)
