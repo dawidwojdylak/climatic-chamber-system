@@ -2,8 +2,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets, QtChart
 from PySide2.QtCore import Slot 
 
 class Chart(QtChart.QChart):
-    def __init__(self):
+    def __init__(self, parent = None):
         QtChart.QChart.__init__(self)
+        self.parent = parent
 
         self.tempPoints = []
         self.humidPoints = []
@@ -44,24 +45,7 @@ class Chart(QtChart.QChart):
         self.lineSeriesHumid.attachAxis(self.yAxis)
         self.scatterSeriesHumid.attachAxis(self.yAxis)
 
-
-    def addHumidPoint(self, point : QtCore.QPointF):
-        HOR_TOL = 2
-        if len(self.humidPoints) > 0:
-            if abs(self.humidPoints[-1].y() - point.y()) <= HOR_TOL:
-                point.setY(self.humidPoints[-1].y())
-        self.humidPoints.append(point)
-        self.updatePoints()
-
-    def addTempPoint(self, point : QtCore.QPointF):
-        HOR_TOL = 2
-        if len(self.tempPoints) > 0:
-            if abs(self.tempPoints[-1].y() - point.y()) <= HOR_TOL:
-                point.setY(self.tempPoints[-1].y())
-        self.tempPoints.append(point)
-        self.updatePoints()
-
-    def updatePoints(self):
+    def drawPoints(self):
         self.lineSeriesTemp.clear()
         self.lineSeriesHumid.clear()
         self.scatterSeriesTemp.clear()
@@ -78,8 +62,36 @@ class Chart(QtChart.QChart):
         
         self.update()
 
+    def updateDelta(self):
+        delta = -1
+        if self.isHumid and len(self.humidPoints) > 1:
+            delta = abs(self.humidPoints[-1].x() - self.humidPoints[-2].x())
+        elif len(self.tempPoints) > 1:
+            delta = abs(self.tempPoints[-1].x() - self.tempPoints[-2].x())
+        self.parent.onPointAdded(delta)
+
+    def addHumidPoint(self, point : QtCore.QPointF):
+        HOR_TOL = 2
+        if len(self.humidPoints) > 0:
+            if abs(self.humidPoints[-1].y() - point.y()) <= HOR_TOL:
+                point.setY(self.humidPoints[-1].y())
+            if point.x() <= self.humidPoints[-1].x():
+                point.setX(self.humidPoints[-1].x())
+        self.humidPoints.append(point)
+        self.drawPoints()
+
+    def addTempPoint(self, point : QtCore.QPointF):
+        HOR_TOL = 2
+        if len(self.tempPoints) > 0:
+            if abs(self.tempPoints[-1].y() - point.y()) <= HOR_TOL:
+                point.setY(self.tempPoints[-1].y())
+            if point.x() <= self.tempPoints[-1].x():
+                point.setX(self.tempPoints[-1].x())
+        self.tempPoints.append(point)
+        self.drawPoints()
+
     def test(self):
-        self.updatePoints()
+        self.drawPoints()
         for i in range(10):
             self.scatterSeriesHumid << QtCore.QPointF(i, i) 
             self.lineSeriesHumid << QtCore.QPointF(i, i) 
@@ -91,23 +103,27 @@ class Chart(QtChart.QChart):
             self.addHumidPoint(QtCore.QPointF(x, y))
         else:
             self.addTempPoint(QtCore.QPointF(x, y))
-        self.updatePoints()
+        self.updateDelta()
+        self.drawPoints()
 
     
     @Slot(bool)
     def humidityOptionChecked(self, val):
         self.isHumid = val
+        self.updateDelta()
 
     @Slot()
     def clearChart(self):
         self.tempPoints.clear()
         self.humidPoints.clear()
-        self.updatePoints()
+        self.zoomReset()
+        self.drawPoints()
+        self.parent.onPointAdded(-1.)
 
     @Slot() 
     def scatterEnabled(self, enabled : bool):
         self.scatterEnable = enabled
-        self.updatePoints()
+        self.drawPoints()
             
 
     @Slot()
@@ -116,4 +132,4 @@ class Chart(QtChart.QChart):
             self.humidPoints.pop()
         elif len(self.tempPoints):
             self.tempPoints.pop()
-        self.updatePoints()
+        self.drawPoints()

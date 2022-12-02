@@ -22,7 +22,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.communicator = Communicator()
         
         self.chart = QtChart.QChart()
-        self.chart = Chart()
+        self.chart = Chart(self)
         self.chartView = ChartView(self.chart, self)
         self.chartView.setChart(self.chart)
         self.ui.verticalLayout.addWidget(self.chartView)
@@ -77,6 +77,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.label_chartMousePos.setVisible(val)
         self.ui.checkBox_chartScatter.setVisible(val)
         self.ui.pushButton_chartDeleteLast.setVisible(val)
+        self.ui.label_chartDeltaT.setVisible(val)
 
     
     def onCommandListItemClicked(self):
@@ -139,6 +140,13 @@ class UIControler(QtWidgets.QMainWindow):
     def onMouseOnChartMoved(self, x : float, y : float):
         text = 'x: %2.1f, y: %2.1f' % (x, y)
         self.ui.label_chartMousePos.setText(text)
+
+    def onPointAdded(self, d : float):
+        if d < 0:
+            self.ui.label_chartDeltaT.setText('')
+            return
+        text = 'delta t: %2.1f' % (d)
+        self.ui.label_chartDeltaT.setText(text)
 
 
     @Slot(str)
