@@ -37,11 +37,12 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
         self.communicator.printErrSignal.connect(self.onCommunicatorErrMsgReceived)
         QtWidgets.QShortcut(QKeySequence('Ctrl+Q'), self).activated.connect(QtWidgets.QApplication.instance().quit)
-        self.ui.radioButton_chartHumidity.toggled.connect(self.chartView.humidityOptionChecked1)
+        self.ui.radioButton_chartHumidity.toggled.connect(self.chart.humidityOptionChecked)
         self.ui.tabWidget.currentChanged.connect(self.setVisibleChartRadioButtons)
         self.ui.pushButton.clicked.connect(self.onPushButtonClicked)
         self.ui.pushButton_chartClear.clicked.connect(self.chart.clearChart)
         self.ui.checkBox_chartScatter.clicked.connect(self.chart.scatterEnabled)
+        self.ui.pushButton_chartDeleteLast.clicked.connect(self.chart.deleteLastPoint)
         # self.chartView.mouseMovedSignal.connect(self.onMouseOnChartMoved)
 
 
@@ -75,6 +76,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_chartClear.setVisible(val)
         self.ui.label_chartMousePos.setVisible(val)
         self.ui.checkBox_chartScatter.setVisible(val)
+        self.ui.pushButton_chartDeleteLast.setVisible(val)
 
     
     def onCommandListItemClicked(self):

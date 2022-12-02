@@ -6,8 +6,7 @@ class ChartView(QtChart.QChartView):
         QtChart.QChartView.__init__(self)
         self.chart = chart
         self.parent = parent
-        # If true draw humidity, if not draw temperature
-        self.humidityOptionChecked = True 
+         
         
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         wPos = event.localPos()
@@ -30,14 +29,11 @@ class ChartView(QtChart.QChartView):
         if event.button() == QtCore.Qt.MouseButton.RightButton:
             self.chart.addPoint(
                 round(self.currentCursorPosOnChart.x(), 1), 
-                round(self.currentCursorPosOnChart.y(),1),
-                self.humidityOptionChecked)
+                round(self.currentCursorPosOnChart.y(),1)
+                )
 
         return super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         return super().mouseReleaseEvent(event)
 
-    @Slot(bool)
-    def humidityOptionChecked1(self, val):
-        self.humidityOptionChecked = val

@@ -106,6 +106,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_chartDeleteLast">
+          <property name="text">
+           <string>Delete last point</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_chartClear">
           <property name="text">
            <string>Clear</string>

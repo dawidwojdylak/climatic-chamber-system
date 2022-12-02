@@ -8,6 +8,8 @@ class Chart(QtChart.QChart):
         self.tempPoints = []
         self.humidPoints = []
         self.scatterEnable = True
+        # If true draw humidity, if not draw temperature
+        self.isHumid = True
 
         self.lineSeriesTemp = QtChart.QLineSeries()
         self.lineSeriesHumid = QtChart.QLineSeries()
@@ -84,12 +86,17 @@ class Chart(QtChart.QChart):
 
         self.update()
     
-    def addPoint(self, x : float, y : float, isHumid : bool):
-        if isHumid:
+    def addPoint(self, x : float, y : float):
+        if self.isHumid:
             self.addHumidPoint(QtCore.QPointF(x, y))
         else:
             self.addTempPoint(QtCore.QPointF(x, y))
         self.updatePoints()
+
+    
+    @Slot(bool)
+    def humidityOptionChecked(self, val):
+        self.isHumid = val
 
     @Slot()
     def clearChart(self):
@@ -102,3 +109,11 @@ class Chart(QtChart.QChart):
         self.scatterEnable = enabled
         self.updatePoints()
             
+
+    @Slot()
+    def deleteLastPoint(self):
+        if self.isHumid and len(self.humidPoints):
+            self.humidPoints.pop()
+        elif len(self.tempPoints):
+            self.tempPoints.pop()
+        self.updatePoints()
