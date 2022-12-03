@@ -4,7 +4,6 @@ from PyQt5.QtGui import QKeySequence
 from PySide2.QtCore import QObject, Signal, Slot
 from MainWindow import Ui_MainWindow
 import ChamberControler 
-from Communicator import Communicator
 import pyqtgraph as pg
 import numpy as np
 import os
@@ -19,7 +18,6 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
-        self.communicator = Communicator()
         
         self.chart = QtChart.QChart()
         self.chart = Chart(self)
@@ -35,7 +33,6 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.listWidget_commandList.itemSelectionChanged.connect(self.onCommandListItemClicked)
         self.ui.listWidget_commandList.itemDoubleClicked.connect(self.onPushButton_sendCommandClicked)
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
-        self.communicator.printErrSignal.connect(self.onCommunicatorErrMsgReceived)
         QtWidgets.QShortcut(QKeySequence('Ctrl+Q'), self).activated.connect(QtWidgets.QApplication.instance().quit)
         self.ui.radioButton_chartHumidity.toggled.connect(self.chart.humidityOptionChecked)
         self.ui.tabWidget.currentChanged.connect(self.setVisibleChartRadioButtons)
@@ -113,7 +110,7 @@ class UIControler(QtWidgets.QMainWindow):
                 userValue = self.ui.doubleSpinBox_userInput1.value()
                 self.selectedCommand.setValue(userValue)
         except Exception as e:
-            self.onCommunicatorErrMsgReceived(str(e))
+            print(e)
             return 
         response = self.chamberControler.sendCommandToChamber(self.selectedCommand)
         if type(response) != dict:
@@ -152,11 +149,6 @@ class UIControler(QtWidgets.QMainWindow):
 
     def onChartSendButtonClicked(self):
         self.chart.getScripts()
-
-    @Slot(str)
-    def onCommunicatorErrMsgReceived(self, msg : str):
-        print("slot str " + msg)
-        self.ui.statusbar.showMessage(msg, 3000)
 
 
 def setUpWindow():

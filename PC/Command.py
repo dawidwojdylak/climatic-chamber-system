@@ -1,7 +1,6 @@
 from ast import arg
 import Argument
 import sys
-from Communicator import Communicator
 
 class Command:
     """Class containing Climatic Chamber commands as Argument objects sequences"""
@@ -33,13 +32,9 @@ class Command:
     def prepareRequest(self) -> str:
         """Returns ready-to-send request"""
         if self.badRequest == True:
-            Communicator.eprint("Bad request")
             return None
         request = ""
         for arg in self.request:
-            # if arg.argType == "user_value" and (type(arg.arg) != float or type(arg.arg) != int):
-                # sys.stderr.write("The value is not set!\nClearing request...")
-                # return None
             request += str(arg)
         return request
 
@@ -60,27 +55,21 @@ class Command:
             print(str(e))
 
 
-    # TODO: check how many arguments are to be changed
     def setValue(self, value : float) -> None:
         """Sets value of argument with range check if needed"""
         try:
             for arg in self.request:
                 if arg.argType == "user_value":
                     if arg.min != None and float(value) < arg.min:
-                        Communicator.eprint("The value is too low. Min = " + str(arg.min))
                         self.badRequest = True
                         return
                     if arg.max != None and float(value) > arg.max:
-                        Communicator.eprint("The value is too high. Max = " + str(arg.max))
                         self.badRequest = True
                         return
                     arg.arg = '%.2f' % value
             self.badRequest = False
         except Exception as e:
             print(e)
-
-    # def __str__(self) -> str:
-        # return self.prepareRequest()
 
     def getName(self):
         return self.name
@@ -94,14 +83,6 @@ class Command:
     def getUserModifiableArguments(self):
         return [r for r in self.request if r.getArgType() == "user_value"]
 
-
-class CommandRead(Command):
-    def __init__(self):
-        pass
-
-class CommandSet(Command):
-    def __init__(self):
-        pass
 
 if __name__ == "__main__":
     arg1 = Argument("T", '', "-2.3", "32.1")

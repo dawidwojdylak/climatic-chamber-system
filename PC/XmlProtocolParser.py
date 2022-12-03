@@ -2,7 +2,6 @@
 import xml.etree.ElementTree as ET
 from Command import *
 from Argument import *
-from Communicator import Communicator
 
 class XmlProtocolParser:
     """Class containing parser for XML commands' protocol"""
@@ -19,7 +18,7 @@ class XmlProtocolParser:
                 # for child in root:
                     # self.commandsDict.update({child.attrib.get("name") : child.find("request").text})
         except Exception as e:
-            Communicator.eprint("Exception: " + str(e))
+            print("Exception: " + str(e))
 
     def importCommandsFromXml(self):
         """This metod parser XML into Commands (containing Arguments)"""
