@@ -25,6 +25,10 @@ class Chart(QtChart.QChart):
         self.xAxis = QtChart.QValueAxis()
         self.xAxis.setMin(0)
         self.xAxis.setMax(100)
+        # self.xAxis.setTickAnchor(0.)
+        # self.xAxis.setTickInterval(10.)
+        # self.xAxis.setTickType(QtCore.Qt.QValueAxis.TicksFixed)
+        # self.xAxis.setTickCount(10)
         self.xAxis.setTitleText("Time [min]")
         self.addAxis(self.xAxis, QtCore.Qt.AlignBottom)
 
@@ -50,22 +54,6 @@ class Chart(QtChart.QChart):
         self.lineSeriesHumid.clear()
         self.scatterSeriesTemp.clear()
         self.scatterSeriesHumid.clear()
-
-        # tempPoints = []
-        # for i in self.tempPoints:
-        #     x = QtCore.QDateTime()
-        #     x.setDate(QtCore.QDate(0, 0, 0))
-        #     x.setTime(QtCore.QTime(0, i.x()))
-        #     tempPoints.append(QtCore.QPointF(x, i.y()))
-
-        # humidPoints = []
-        # for i in self.humidPoints:
-        #     x = QtCore.QDateTime()
-        #     x.setDate(QtCore.QDate(0, 0, 0))
-        #     x.setTime(QtCore.QTime(0, i.x()))
-        #     humidPoints.append(QtCore.QPointF(x, i.y()))
-        #     print(humidPoints)
-
 
         for i in self.tempPoints:
             self.lineSeriesTemp << i
@@ -93,6 +81,8 @@ class Chart(QtChart.QChart):
                 point.setY(self.humidPoints[-1].y())
             if point.x() <= self.humidPoints[-1].x():
                 point.setX(self.humidPoints[-1].x())
+        if point.y() < 0.: 
+            point.setY(0.)
         self.humidPoints.append(point)
         self.drawPoints()
 
@@ -125,7 +115,33 @@ class Chart(QtChart.QChart):
         super().zoom(factor)
         self.yAxis.setMin(-40.)
         self.yAxis.setMax(80.)
+        
+    def getScripts(self):
+        humidScript = ""
+        h = self.humidPoints
+        for i in range(1, len(h)):
+            time = h[i].x() - h[i-1].x()
+            if h[i].y() - h[i-1].y() == 0:
+                humidScript += "set_humidity(" + str(h[i].y()) + ")\nsleep(" + str(time) + ")\n"
+            elif h[i].y() - h[i-1].y() > 0:
+                a = (h[i].y() - h[i-1].y()) / (h[i].x() - h[i-1].x())                
+                humidScript += "set_humidity_gradient_up(" + str(round(a, 2)) + ")\nsleep(" + str(time) + ")\n"
+            elif h[i].y() - h[i-1].y() < 0:
+                a = (h[i].y() - h[i-1].y()) / (h[i].x() - h[i-1].x())                
+                humidScript += "set_humidity_gradient_down(" + str(-round(a, 2)) + ")\nsleep(" + str(time) + ")\n"
 
+        tempScript = ""
+        h = self.tempPoints
+        for i in range(1, len(h)):
+            time = h[i].x() - h[i-1].x()
+            if h[i].y() - h[i-1].y() == 0:
+                tempScript += "set_temperature(" + str(h[i].y()) + ")\nsleep(" + str(time) + ")\n"
+            elif h[i].y() - h[i-1].y() > 0:
+                a = (h[i].y() - h[i-1].y()) / (h[i].x() - h[i-1].x())                
+                tempScript += "set_temperature_gradient_up(" + str(round(a, 2)) + ")\nsleep(" + str(time) + ")\n"
+            elif h[i].y() - h[i-1].y() < 0:
+                a = (h[i].y() - h[i-1].y()) / (h[i].x() - h[i-1].x())                
+                tempScript += "set_temperature_gradient_down(" + str(-round(a, 2)) + ")\nsleep(" + str(time) + ")\n"
     
     @Slot(bool)
     def humidityOptionChecked(self, val):

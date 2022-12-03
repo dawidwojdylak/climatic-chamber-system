@@ -113,6 +113,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_chartSend">
+          <property name="text">
+           <string>Send</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_chartDeleteLast">
           <property name="text">
            <string>Delete last point</string>

@@ -43,6 +43,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_chartClear.clicked.connect(self.chart.clearChart)
         self.ui.checkBox_chartScatter.clicked.connect(self.chart.scatterEnabled)
         self.ui.pushButton_chartDeleteLast.clicked.connect(self.chart.deleteLastPoint)
+        self.ui.pushButton_chartSend.clicked.connect(self.onChartSendButtonClicked)
         # self.chartView.mouseMovedSignal.connect(self.onMouseOnChartMoved)
 
 
@@ -78,6 +79,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.checkBox_chartScatter.setVisible(val)
         self.ui.pushButton_chartDeleteLast.setVisible(val)
         self.ui.label_chartDeltaT.setVisible(val)
+        self.ui.pushButton_chartSend.setVisible(val)
 
     
     def onCommandListItemClicked(self):
@@ -148,6 +150,8 @@ class UIControler(QtWidgets.QMainWindow):
         text = 'delta t: %.1f [min]' % (d)
         self.ui.label_chartDeltaT.setText(text)
 
+    def onChartSendButtonClicked(self):
+        self.chart.getScripts()
 
     @Slot(str)
     def onCommunicatorErrMsgReceived(self, msg : str):

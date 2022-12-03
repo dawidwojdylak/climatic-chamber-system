@@ -45,7 +45,6 @@ class ChartView(QtChart.QChartView):
 
         else: 
             self.chart.scroll(self.chart.plotArea().width() / (50*120) * event.angleDelta().y(), 0)
-
         return super().wheelEvent(event)
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
