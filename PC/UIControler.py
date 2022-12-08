@@ -17,7 +17,7 @@ class UIControler(QtWidgets.QMainWindow):
         QtWidgets.QWidget.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.chamberControler = ChamberControler.ChamberControler("./CTS_Interface_Protocol.xml")
+        self.chamberControler = ChamberControler.ChamberControler("./CtsInterfaceProtocol.xml")
         
         self.chart = QtChart.QChart()
         self.chart = Chart(self)

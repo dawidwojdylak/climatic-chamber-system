@@ -168,7 +168,6 @@
 		</request>
 		<response>
 			<argument>a</argument>
-			<error descr="channel_not_present">x</error>
 		</response>
 	</command>
 

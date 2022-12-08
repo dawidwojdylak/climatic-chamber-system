@@ -35,7 +35,7 @@ class ChamberControler:
 
 
 if __name__ == "__main__":
-    cc = ChamberControler("./CTS_Interface_Protocol.xml")
+    cc = ChamberControler("./CtsInterfaceProtocol.xml")
     print("...ChamberControler...")
     testCommmandList = cc.getCommandsNamesList()
 
