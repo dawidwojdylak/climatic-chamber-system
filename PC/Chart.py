@@ -96,14 +96,6 @@ class Chart(QtChart.QChart):
         self.tempPoints.append(point)
         self.drawPoints()
 
-    def test(self):
-        self.drawPoints()
-        for i in range(10):
-            self.scatterSeriesHumid << QtCore.QPointF(i, i) 
-            self.lineSeriesHumid << QtCore.QPointF(i, i) 
-
-        self.update()
-    
     def addPoint(self, x : float, y : float):
         if self.isHumid:
             self.addHumidPoint(QtCore.QPointF(x, y))
@@ -119,6 +111,7 @@ class Chart(QtChart.QChart):
     def getScripts(self):
         # remember to send humid and temp commands simultaneously
         humidScript = ""
+        if (len(self.humidPoints) < 1 or len(self.tempPoints) < 1): return
         h = self.humidPoints
         if h[0].x() > 0:
             humidScript += "sleep(" + str(h[0].x()) + ")\n"

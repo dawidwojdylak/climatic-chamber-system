@@ -19,7 +19,7 @@ class ChartView(QtChart.QChartView):
             round(2 * self.currentCursorPosOnChart.y()) / 2,
         )
 
-        self.parent.onMouseOnChartMoved(
+        self.parent.onMouseOnChartHover(
             round(self.currentCursorPosOnChart.x(), 1), 
                 round(self.currentCursorPosOnChart.y(),1)
         )
@@ -33,9 +33,6 @@ class ChartView(QtChart.QChartView):
                 )
 
         return super().mousePressEvent(event)
-
-    def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
-        return super().mouseReleaseEvent(event)
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
         if self.ctrlClicked:

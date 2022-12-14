@@ -51,9 +51,10 @@
 			<argument>A</argument>
 			<argument>0</argument>
 			<argument type="blank"> </argument>
-			<argument descr="actual temperature">yyy.y</argument>
+			<!-- TODO: UNIT DO ZAIMPLEMENTOWANIA -->
+			<argument descr="actual temperature" unit="celc_deg">yyy.y</argument> 
 			<argument type="blank"> </argument>
-			<argument descr="set temperature">zzz.z</argument>
+			<argument descr="set temperature" unit="celc_deg">zzz.z</argument>
 		</response>
 	</command>
 

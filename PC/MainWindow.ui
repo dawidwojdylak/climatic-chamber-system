@@ -23,37 +23,9 @@
          <enum>QLayout::SetMaximumSize</enum>
         </property>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="pushButton_login">
           <property name="text">
            <string>Log In</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_5">
-          <property name="text">
-           <string>Refresh Info</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="text">
-           <string>Modify Parameters</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="text">
-           <string>Scripts...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>Other</string>
           </property>
          </widget>
         </item>
@@ -326,20 +298,26 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionSelect_chamber"/>
     <addaction name="actionConnect_to_server"/>
+    <addaction name="action_checkConnection"/>
+    <addaction name="actionClose_connection"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionSelect_chamber">
+  <action name="action_checkConnection">
    <property name="text">
-    <string>Select Chamber</string>
+    <string>Check connection</string>
    </property>
   </action>
   <action name="actionConnect_to_server">
    <property name="text">
     <string>Connect to server</string>
+   </property>
+  </action>
+  <action name="actionClose_connection">
+   <property name="text">
+    <string>Close connection</string>
    </property>
   </action>
  </widget>

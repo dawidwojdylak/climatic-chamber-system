@@ -3,10 +3,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets, QtChart
 from PyQt5.QtGui import QKeySequence
 from PySide2.QtCore import QObject, Signal, Slot
 from MainWindow import Ui_MainWindow
+from Login import Ui_Login
 import ChamberControler 
-import pyqtgraph as pg
-import numpy as np
-import os
 from ChartView import ChartView
 from Chart import Chart
 
@@ -14,9 +12,12 @@ from Chart import Chart
 
 class UIControler(QtWidgets.QMainWindow):
     def __init__(self):
-        QtWidgets.QWidget.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
+        # super(UIControler, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.loginPopUp = Ui_Login()
+        # self.loginPopUp.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler("./CtsInterfaceProtocol.xml")
         
         self.chart = QtChart.QChart()
@@ -35,13 +36,18 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
         QtWidgets.QShortcut(QKeySequence('Ctrl+Q'), self).activated.connect(QtWidgets.QApplication.instance().quit)
         self.ui.radioButton_chartHumidity.toggled.connect(self.chart.humidityOptionChecked)
-        self.ui.tabWidget.currentChanged.connect(self.setVisibleChartRadioButtons)
-        self.ui.pushButton.clicked.connect(self.onPushButtonClicked)
+        self.ui.tabWidget.currentChanged.connect(self.setVisibleChartButtons)
+        # self.ui.pushButton_login.clicked.connect(self.onPushButtonClicked_login)
+        self.ui.pushButton_login.clicked.connect(self.loginPopUp.exec)
+        self.loginPopUp.accepted.connect(self.onPushButtonClicked_login)
         self.ui.pushButton_chartClear.clicked.connect(self.chart.clearChart)
         self.ui.checkBox_chartScatter.clicked.connect(self.chart.scatterEnabled)
         self.ui.pushButton_chartDeleteLast.clicked.connect(self.chart.deleteLastPoint)
         self.ui.pushButton_chartSend.clicked.connect(self.onChartSendButtonClicked)
         # self.chartView.mouseMovedSignal.connect(self.onMouseOnChartMoved)
+        self.ui.action_checkConnection.triggered.connect(self.onCheckConnectionToggled)
+        self.ui.actionConnect_to_server.triggered.connect(self.loginPopUp.exec)
+        self.ui.actionClose_connection.triggered.connect(self.onCloseConnectionToggled)
 
 
     def updateCommandList(self):
@@ -65,7 +71,7 @@ class UIControler(QtWidgets.QMainWindow):
             if item:
                 item.setVisible(val)
 
-    def setVisibleChartRadioButtons(self, val):
+    def setVisibleChartButtons(self, val):
         val = True if val == 0 else 0 # 0 is index of chart tab
         self.ui.line_chart.setVisible(val)
         self.ui.label_chart.setVisible(val)
@@ -78,7 +84,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.label_chartDeltaT.setVisible(val)
         self.ui.pushButton_chartSend.setVisible(val)
 
-    
+    @Slot()
     def onCommandListItemClicked(self):
         selectedCommandIndex = self.ui.listWidget_commandList.currentRow() 
         self.selectedCommand = self.chamberControler.getCommands()[selectedCommandIndex]
@@ -101,6 +107,7 @@ class UIControler(QtWidgets.QMainWindow):
         else:
             self.setVisibleUserInput(False)
 
+    @Slot()
     def onPushButton_sendCommandClicked(self):
         # currentCommand = self.chamberControler.getCommands()[self.selectedCommandIndex]
         # try to optimize this method
@@ -123,23 +130,34 @@ class UIControler(QtWidgets.QMainWindow):
             textWindow.setFontWeight(100)
             textWindow.insertPlainText(value + "\n")
         
-    def onPushButtonClicked(self):
-        self.chart.test()
+    @Slot()    
+    def onPushButtonClicked_login(self):
+        # print(self.loginPopUp.pwd, self.loginPopUp.login)
+        self.chamberControler.sshSender.logIn(self.loginPopUp.pwd, self.loginPopUp.login)
+        self.ui.statusbar.showMessage("Logging in...")
+        if self.chamberControler.sshSender.checkConnection():
+            self.ui.statusbar.showMessage("Logged in succesfully", 4000)
+        else:
+            self.ui.statusbar.showMessage("Login failed", 4000)
 
-    def onGraphMouseHoverUpdateStatusBar(self, evt):
-        pos = evt
-        if self.plot.sceneBoundingRect().contains(pos):
-            mousePoint = self.plot.vb.mapSceneToView(pos)
-            index = int(mousePoint.x())
-            # if index > 0:  #and index < len(data1):
-            self.plotLabel.setText("<span style='font-size: 12pt'>t=%0.2f[s],\t<span style='color: red'>y=%0.2f</span>" % (mousePoint.x(), mousePoint.y()))
-            self.plotvLine.setPos(mousePoint.x())
-            self.plothLine.setPos(mousePoint.y())
+    @Slot()
+    def onCheckConnectionToggled(self):
+        if self.chamberControler.sshSender.checkConnection():
+            self.ui.statusbar.showMessage("Connected", 3000)
+        else:
+            self.ui.statusbar.showMessage("Connection failed", 3000)
 
-    def onMouseOnChartMoved(self, x : float, y : float):
+    @Slot()
+    def onCloseConnectionToggled(self):
+        self.ui.statusbar.showMessage("Connection closed", 3000)
+        self.chamberControler.sshSender.logOut()
+
+    @Slot()
+    def onMouseOnChartHover(self, x : float, y : float):
         text = 'x: %2.1f, y: %2.1f' % (x, y)
         self.ui.label_chartMousePos.setText(text)
 
+    @Slot()
     def onPointAdded(self, d : float):
         if d < 0:
             self.ui.label_chartDeltaT.setText('')
@@ -147,6 +165,7 @@ class UIControler(QtWidgets.QMainWindow):
         text = 'delta t: %.1f [min]' % (d)
         self.ui.label_chartDeltaT.setText(text)
 
+    @Slot()
     def onChartSendButtonClicked(self):
         self.chart.getScripts()
 

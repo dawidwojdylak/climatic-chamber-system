@@ -7,35 +7,22 @@ class ChamberControler:
         self.xmlParser = xml.XmlProtocolParser(xmlConfigPath)
         self.xmlParser.importCommandsFromXml()
         self.commandList = self.xmlParser.getCommands()
-        # self.sshSender = ssh.SshProtocolSender()
-        self.respSimulator = simulator.ResponseSimulator()
-
+        self.sshSender = ssh.SshProtocolSender()
+        # self.respSimulator = simulator.ResponseSimulator()
         self.currentCommand = None
-
-    def parseXml(self, xmlFilePath):
-        self.xmlParser = xml.XmlProtocolParser(xmlFilePath)
 
     def updateCommandList(self):
         self.commandList = self.xmlParser.getCommands()
+        return self.commandList
 
-    def getCommandsNamesList(self):
-        return [i.getName() for i in self.commandList]
-    
     def getCommands(self):
         return self.commandList
 
-    def sendCommandToChamber(self, commandName : str):
-        pass        
-    
     def sendCommandToChamber(self, cmd):
         request = cmd.prepareRequest()
-        response = self.respSimulator.sendCommand(request)
-        # TODO: prepare (parse) response
+        # response = self.respSimulator.sendCommand(request)
+        response = self.sshSender.execCommand(request)
         return cmd.parseChamberResponse(response)
 
 
-if __name__ == "__main__":
-    cc = ChamberControler("./CtsInterfaceProtocol.xml")
-    print("...ChamberControler...")
-    testCommmandList = cc.getCommandsNamesList()
 

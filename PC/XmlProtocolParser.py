@@ -11,12 +11,14 @@ class XmlProtocolParser:
         self.commands = []
         self.tree = None
         self.root = None
+        self.importXmlFile(filePath)
+
+    def importXmlFile(self, filePath):
+        """Imports XML file"""
+        self.filePath = filePath
         try:
             self.tree = ET.parse(self.filePath)
             self.root = self.tree.getroot()
-            # if root.tag == "commands":
-                # for child in root:
-                    # self.commandsDict.update({child.attrib.get("name") : child.find("request").text})
         except Exception as e:
             print("Exception: " + str(e))
 

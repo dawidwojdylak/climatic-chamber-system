@@ -39,6 +39,7 @@ class Command:
         return request
 
     def parseChamberResponse(self, resp : str):
+        """Encodes string of chamber response"""
         i = 0
         result = {}
         try:
