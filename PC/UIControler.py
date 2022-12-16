@@ -29,6 +29,7 @@ class UIControler(QtWidgets.QMainWindow):
 
         # user input widget
         self.setVisibleUserInput(False)
+        self.ui.pushButton_logClear.setVisible(False)
         self.ui.radioButton_chartHumidity.setChecked(True)
 
         # connects:
@@ -45,12 +46,15 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.checkBox_chartScatter.clicked.connect(self.chart.scatterEnabled)
         self.ui.pushButton_chartDeleteLast.clicked.connect(self.chart.deleteLastPoint)
         self.ui.pushButton_chartSend.clicked.connect(self.onChartSendButtonClicked)
+        self.ui.pushButton_logClear.clicked.connect(self.ui.textBrowser_chamberResponse.clear)
         # self.chartView.mouseMovedSignal.connect(self.onMouseOnChartMoved)
         self.ui.action_checkConnection.triggered.connect(self.onCheckConnectionToggled)
         self.ui.actionConnect_to_server.triggered.connect(self.loginPopUp.exec)
         self.ui.actionClose_connection.triggered.connect(self.onCloseConnectionToggled)
         self.ui.actionImport_xml_config_file.triggered.connect(self.onImportXmlToggled)
         self.ui.actionExit.triggered.connect(QtWidgets.QApplication.instance().quit)
+
+        self.logError('1')
 
 
     def updateCommandList(self):
@@ -80,7 +84,7 @@ class UIControler(QtWidgets.QMainWindow):
 
     def setVisibleChartButtons(self, val):
         val = True if val == 0 else 0 # 0 is index of chart tab
-        self.ui.line_chart.setVisible(val)
+        # self.ui.line_chart.setVisible(val)
         self.ui.label_chart.setVisible(val)
         self.ui.radioButton_chartHumidity.setVisible(val)
         self.ui.radioButton_chartTemperature.setVisible(val)
@@ -90,13 +94,15 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_chartDeleteLast.setVisible(val)
         self.ui.label_chartDeltaT.setVisible(val)
         self.ui.pushButton_chartSend.setVisible(val)
+        self.ui.pushButton_logClear.setVisible(not val)
+        
 
-    def logError(self, errorMsg : str, endline : str = '\n'):
+    def logError(self, errorMsg : str):
         t = time.localtime()
         now = time.strftime("%H:%M:%S", t)
         textWindow = self.ui.textBrowser_chamberResponse 
         textWindow.setTextColor(QtGui.QColor('#b00202'))
-        textWindow.setPlainText("[" + now + "] " + errorMsg + endline)
+        textWindow.append("[" + now + "] " + errorMsg)
         textWindow.setTextColor(QtGui.QColor('#000000'))
         self.ui.statusbar.showMessage(errorMsg, 4000)
 
@@ -130,7 +136,7 @@ class UIControler(QtWidgets.QMainWindow):
         # try to optimize this method
         textWindow = self.ui.textBrowser_chamberResponse 
         if self.chamberControler.sshSender.checkConnection() == False:
-            self.logError("User is not logged in. Cannot send request.\n")
+            self.logError("User is not logged in. Cannot send request.")
             return
         userValue = ''
         try:
