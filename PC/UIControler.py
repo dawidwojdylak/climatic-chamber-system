@@ -7,6 +7,7 @@ from Login import Ui_Login
 import ChamberControler 
 from ChartView import ChartView
 from Chart import Chart
+import time
 
 # pyuic5 -x  -o
 
@@ -48,6 +49,8 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.action_checkConnection.triggered.connect(self.onCheckConnectionToggled)
         self.ui.actionConnect_to_server.triggered.connect(self.loginPopUp.exec)
         self.ui.actionClose_connection.triggered.connect(self.onCloseConnectionToggled)
+        self.ui.actionImport_xml_config_file.triggered.connect(self.onImportXmlToggled)
+        self.ui.actionExit.triggered.connect(QtWidgets.QApplication.instance().quit)
 
 
     def updateCommandList(self):
@@ -62,7 +65,11 @@ class UIControler(QtWidgets.QMainWindow):
 
     # @Slot(str)
     def printErrorToStatusBar(self, msg : str):
-        self.ui.statusbar.showMessage(str, 2000)
+        # self.ui.statusbar.setStyleSheet("color: #ad0c00")
+        # self.ui.statusbar.setStyleSheet("color: rbg(255, 0, 0);")
+        # self.ui.statusbar.setStyleSheet("background-color: rbg(255, 0, 0);")
+        self.ui.statusbar.showMessage(msg, 4000)
+        # self.ui.statusbar.setStyleSheet("color: #000000")
 
     def setVisibleUserInput(self, val : bool):
         layout = self.ui.horizontalLayout_userInput1
@@ -83,6 +90,16 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_chartDeleteLast.setVisible(val)
         self.ui.label_chartDeltaT.setVisible(val)
         self.ui.pushButton_chartSend.setVisible(val)
+
+    def logError(self, errorMsg : str, endline : str = '\n'):
+        t = time.localtime()
+        now = time.strftime("%H:%M:%S", t)
+        textWindow = self.ui.textBrowser_chamberResponse 
+        textWindow.setTextColor(QtGui.QColor('#b00202'))
+        textWindow.setPlainText("[" + now + "] " + errorMsg + endline)
+        textWindow.setTextColor(QtGui.QColor('#000000'))
+        self.ui.statusbar.showMessage(errorMsg, 4000)
+
 
     @Slot()
     def onCommandListItemClicked(self):
@@ -111,6 +128,10 @@ class UIControler(QtWidgets.QMainWindow):
     def onPushButton_sendCommandClicked(self):
         # currentCommand = self.chamberControler.getCommands()[self.selectedCommandIndex]
         # try to optimize this method
+        textWindow = self.ui.textBrowser_chamberResponse 
+        if self.chamberControler.sshSender.checkConnection() == False:
+            self.logError("User is not logged in. Cannot send request.\n")
+            return
         userValue = ''
         try:
             if self.selectedCommand.isUserModifiable():
@@ -122,8 +143,7 @@ class UIControler(QtWidgets.QMainWindow):
         response = self.chamberControler.sendCommandToChamber(self.selectedCommand)
         if type(response) != dict:
             return
-        textWindow = self.ui.textBrowser_chamberResponse 
-        textWindow.clear()
+        # textWindow.clear()
         for key, value in response.items():
             textWindow.setFontWeight(50)
             textWindow.insertPlainText(key + ": ")
@@ -138,7 +158,8 @@ class UIControler(QtWidgets.QMainWindow):
         if self.chamberControler.sshSender.checkConnection():
             self.ui.statusbar.showMessage("Logged in succesfully", 4000)
         else:
-            self.ui.statusbar.showMessage("Login failed", 4000)
+            self.printErrorToStatusBar("Login failed")
+            # self.ui.statusbar.showMessage(, 4000)
 
     @Slot()
     def onCheckConnectionToggled(self):
@@ -169,6 +190,11 @@ class UIControler(QtWidgets.QMainWindow):
     def onChartSendButtonClicked(self):
         self.chart.getScripts()
 
+    @Slot()
+    def onImportXmlToggled(self):
+        fname = QtWidgets.QFileDialog.getOpenFileName(self, 'XML config file', 'c:\\',"xml file (*.xml)")
+        self.chamberControler.importXmlFile(fname[0])
+        self.updateCommandList()
 
 def setUpWindow():
     app = QtWidgets.QApplication(sys.argv)

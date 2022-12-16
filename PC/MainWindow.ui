@@ -130,7 +130,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="Chart">
          <attribute name="title">
@@ -239,7 +239,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Chamber output</string>
+                 <string>Output</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -256,7 +256,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Chamber output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -301,6 +301,10 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionConnect_to_server"/>
     <addaction name="action_checkConnection"/>
     <addaction name="actionClose_connection"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport_xml_config_file"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -318,6 +322,16 @@ p, li { white-space: pre-wrap; }
   <action name="actionClose_connection">
    <property name="text">
     <string>Close connection</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionImport_xml_config_file">
+   <property name="text">
+    <string>Import .xml config file</string>
    </property>
   </action>
  </widget>

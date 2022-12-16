@@ -2,6 +2,9 @@
 <!-- TODO: consider adding types for arguments -->
 <!-- - consider adding full names for displaying it in the GUI -->
 <commands>
+	<config>
+		<ip>10.224.157.83</ip>
+	</config>
 	<command name="read_time">
 		<description>Read time from the chamber clock.</description>
 		<request>
@@ -43,6 +46,7 @@
 	</command> -->
 
 	<command name="read_temperature">
+		<description>Read current and set temperature.</description>
 		<request>
 			<argument>A</argument>
 			<argument>0</argument>
@@ -59,6 +63,7 @@
 	</command>
 
 	<command name="read_humidity">
+		<description>Read current and set humidity.</description>
 		<request>
 			<argument>A</argument>
 			<argument>1</argument>
@@ -74,6 +79,7 @@
 	</command>
 
 	<command name="read_water_storage">
+		<description>Read chamber water storage.</description>
 		<request>
 			<argument>A</argument>
 			<argument>2</argument>
@@ -89,6 +95,7 @@
 	</command>
 
 	<command name="read_temp_supply_air">
+		<description>Read temperature of supply air.</description>
 		<request>
 			<argument>A</argument>
 			<argument>3</argument>
@@ -104,6 +111,7 @@
 	</command>
 
 	<command name="read_temp_exh_air">
+		<description>Read temperature of exhaust air.</description>
 		<request>
 			<argument>A</argument>
 			<argument>4</argument>
@@ -119,6 +127,7 @@
 	</command>
 
 	<command name="read_humid_suppl_air">
+		<description>Read humidity of supply air.</description>
 		<request>
 			<argument>A</argument>
 			<argument>5</argument>
@@ -134,6 +143,7 @@
 	</command>
 
 	<command name="read_humid_exh_air">
+		<description>Read humidity of exhaust air.</description>
 		<request>
 			<argument>A</argument>
 			<argument>6</argument>
@@ -149,7 +159,9 @@
 	</command>
 
 	<!-- to be configured -->
+	<!-- TODO to test!!! -->
 	<command name="read_all_channels">
+		<description>Read all chamber channels.</description>
 		<request>
 			<argument>A</argument>
 			<argument>a</argument>

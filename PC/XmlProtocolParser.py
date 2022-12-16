@@ -15,6 +15,7 @@ class XmlProtocolParser:
 
     def importXmlFile(self, filePath):
         """Imports XML file"""
+        self.commands.clear()
         self.filePath = filePath
         try:
             self.tree = ET.parse(self.filePath)
@@ -25,36 +26,44 @@ class XmlProtocolParser:
     def importCommandsFromXml(self):
         """This metod parser XML into Commands (containing Arguments)"""
         root = self.root
-
+        self.ip = None
         if root.tag == "commands":
             for child in root:
-                command = Command(child.attrib.get("name"))
-                command.setCommandType(child.attrib.get("type"))
-                for grandChild in child:
-                    if grandChild.tag == 'description':
-                        command.fillDescription(grandChild.text)
-                    
-                    if grandChild.tag == 'request':
-                        for arg in grandChild:
-                            argument = Argument(arg.text, arg.attrib.get("type"),  
-                            arg.attrib.get("descr"), arg.attrib.get("min"), 
-                            arg.attrib.get("max"), arg.attrib.get("unit"))
-                            command.fillRequest(argument)
+                if child.tag == "command":
+                    command = Command(child.attrib.get("name"))
+                    command.setCommandType(child.attrib.get("type"))
+                    for grandChild in child:
+                        if grandChild.tag == 'description':
+                            command.fillDescription(grandChild.text)
+                        
+                        if grandChild.tag == 'request':
+                            for arg in grandChild:
+                                argument = Argument(arg.text, arg.attrib.get("type"),  
+                                arg.attrib.get("descr"), arg.attrib.get("min"), 
+                                arg.attrib.get("max"), arg.attrib.get("unit"))
+                                command.fillRequest(argument)
 
-                    if grandChild.tag == 'response':
-                        for arg in grandChild:
-                            argument = Argument(arg.text, arg.attrib.get("type"),  
-                            arg.attrib.get("descr"), arg.attrib.get("min"), 
-                            arg.attrib.get("max"), arg.attrib.get("unit"))
-                            command.fillResponse(argument)
+                        if grandChild.tag == 'response':
+                            for arg in grandChild:
+                                argument = Argument(arg.text, arg.attrib.get("type"),  
+                                arg.attrib.get("descr"), arg.attrib.get("min"), 
+                                arg.attrib.get("max"), arg.attrib.get("unit"))
+                                command.fillResponse(argument)
 
-                self.commands.append(command)
+                    self.commands.append(command)
+                if child.tag == "config":
+                    for grandChild in child:
+                        if grandChild.tag == "ip":
+                            self.ip = grandChild.text
+                            print(self.ip)
             return self.commands
 
     def getCommands(self):
         return self.commands
     def getRoot(self):
         return self.root
+    def getIp(self):
+        return self.ip
 
     def getCommand(self, commandName: str):
         """Returns the particular command"""

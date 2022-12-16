@@ -162,13 +162,21 @@ class Ui_MainWindow(object):
         self.actionConnect_to_server.setObjectName("actionConnect_to_server")
         self.actionClose_connection = QtWidgets.QAction(MainWindow)
         self.actionClose_connection.setObjectName("actionClose_connection")
+        self.actionExit = QtWidgets.QAction(MainWindow)
+        self.actionExit.setObjectName("actionExit")
+        self.actionImport_xml_config_file = QtWidgets.QAction(MainWindow)
+        self.actionImport_xml_config_file.setObjectName("actionImport_xml_config_file")
         self.menuFile.addAction(self.actionConnect_to_server)
         self.menuFile.addAction(self.action_checkConnection)
         self.menuFile.addAction(self.actionClose_connection)
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionImport_xml_config_file)
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -186,17 +194,19 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Available commands"))
         self.label_userInput1.setText(_translate("MainWindow", "Value to set"))
         self.pushButton_sendCommand.setText(_translate("MainWindow", "Send command"))
-        self.label_2.setText(_translate("MainWindow", "Chamber output"))
+        self.label_2.setText(_translate("MainWindow", "Output"))
         self.textBrowser_chamberResponse.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Chamber output</p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Commands"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.action_checkConnection.setText(_translate("MainWindow", "Check connection"))
         self.actionConnect_to_server.setText(_translate("MainWindow", "Connect to server"))
         self.actionClose_connection.setText(_translate("MainWindow", "Close connection"))
+        self.actionExit.setText(_translate("MainWindow", "Exit"))
+        self.actionImport_xml_config_file.setText(_translate("MainWindow", "Import .xml config file"))
 
 
 if __name__ == "__main__":

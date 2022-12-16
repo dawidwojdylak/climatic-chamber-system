@@ -29,6 +29,9 @@ class SshProtocolSender:
 
     def setUsername(self, username):
         self.username = username
+
+    def setIp(self, ip):
+        self.ipAddress = ip
     
     def logIn(self, passwd, username = None, ipAddr = None):
         if username: self.username = username
