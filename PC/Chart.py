@@ -18,8 +18,8 @@ class Chart(QtChart.QChart):
         self.scatterSeriesHumid = QtChart.QScatterSeries()
 
         self.addSeries(self.lineSeriesTemp)
-        self.addSeries(self.lineSeriesHumid)
         self.addSeries(self.scatterSeriesTemp)
+        self.addSeries(self.lineSeriesHumid)
         self.addSeries(self.scatterSeriesHumid)
 
         self.xAxis = QtChart.QValueAxis()
@@ -48,6 +48,9 @@ class Chart(QtChart.QChart):
         self.scatterSeriesTemp.attachAxis(self.yAxis)
         self.lineSeriesHumid.attachAxis(self.yAxis)
         self.scatterSeriesHumid.attachAxis(self.yAxis)
+
+        self.scatterSeriesTemp.setName("Temperature [celc deg]")
+        self.scatterSeriesHumid.setName("Humidity [%]")
 
     def drawPoints(self):
         self.lineSeriesTemp.clear()

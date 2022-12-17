@@ -21,11 +21,29 @@ class UIControler(QtWidgets.QMainWindow):
         # self.loginPopUp.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler("./CtsInterfaceProtocol.xml")
         
+        self.chartSplitter = QtWidgets.QSplitter(self.ui.ChartTab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setHeightForWidth(self.chartSplitter.sizePolicy().hasHeightForWidth())
+        self.chartSplitter.setSizePolicy(sizePolicy)
+        self.chartSplitter.setOrientation(QtCore.Qt.Vertical)
+        self.chartSplitter.setObjectName("chartSplitter")
+        
         self.chart = QtChart.QChart()
         self.chart = Chart(self)
         self.chartView = ChartView(self.chart, self)
         self.chartView.setChart(self.chart)
-        self.ui.verticalLayout.addWidget(self.chartView)
+        self.ui.verticalLayout.addWidget(self.chartSplitter)
+        self.chartSplitter.addWidget(self.chartView)
+
+        self.pointsTable = QtWidgets.QTableWidget(self.ui.ChartTab)
+        self.pointsTable.setColumnCount(1)
+        self.pointsTable.setRowCount(3)
+        self.pointsTable.setVerticalHeaderLabels(['time', 'temperature', 'humidity'])
+        self.chartSplitter.addWidget(self.pointsTable)
+        self.pointsTable.setVisible(False)
+
 
         # user input widget
         self.setVisibleUserInput(False)
@@ -54,7 +72,6 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.actionImport_xml_config_file.triggered.connect(self.onImportXmlToggled)
         self.ui.actionExit.triggered.connect(QtWidgets.QApplication.instance().quit)
 
-        self.logError('1')
 
 
     def updateCommandList(self):
@@ -105,6 +122,13 @@ class UIControler(QtWidgets.QMainWindow):
         textWindow.append("[" + now + "] " + errorMsg)
         textWindow.setTextColor(QtGui.QColor('#000000'))
         self.ui.statusbar.showMessage(errorMsg, 4000)
+
+    def logMsg(self, msg : str):
+        t = time.localtime()
+        now = time.strftime("%H:%M:%S", t)
+        textWindow = self.ui.textBrowser_chamberResponse
+        textWindow.setTextColor(QtGui.QColor('#000000'))
+        textWindow.append("[" + now + "] " + msg)
 
 
     @Slot()

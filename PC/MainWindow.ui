@@ -152,7 +152,7 @@
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="Chart">
+        <widget class="QWidget" name="ChartTab">
          <attribute name="title">
           <string>Chart</string>
          </attribute>
@@ -162,7 +162,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_2">
+        <widget class="QWidget" name="CommandsTab">
          <attribute name="title">
           <string>Commands</string>
          </attribute>
