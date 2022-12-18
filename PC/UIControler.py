@@ -8,6 +8,7 @@ import ChamberControler
 from ChartView import ChartView
 from Chart import Chart
 import time
+import csv
 
 # pyuic5 -x  -o
 
@@ -218,13 +219,27 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onChartSendButtonClicked(self):
-        self.chart.getScripts()
+        tempScript, humidScript = self.chart.getScripts()
+        self.chamberControler.sshSender.execScript(tempScript)
+        self.chamberControler.sshSender.execScript(humidScript)
 
     @Slot()
     def onImportXmlToggled(self):
         fname = QtWidgets.QFileDialog.getOpenFileName(self, 'XML config file', 'c:\\',"xml file (*.xml)")
         self.chamberControler.importXmlFile(fname[0])
         self.updateCommandList()
+
+    @Slot()
+    def onSaveScript(self):
+        name = QtGui.QFileDialog.getSaveFileName(self, 'Save File')
+        file = open(name,'w')
+        text = self.textEdit.toPlainText()
+        file.write(text)
+        file.close()
+
+    @Slot()
+    def onOpenScript(self):
+        pass
 
 def setUpWindow():
     app = QtWidgets.QApplication(sys.argv)

@@ -142,6 +142,8 @@ class Chart(QtChart.QChart):
             elif h[i].y() - h[i-1].y() < 0:
                 a = (h[i].y() - h[i-1].y()) / (h[i].x() - h[i-1].x())                
                 tempScript += "set_temperature_gradient_down(" + str(-round(a, 2)) + ")\nsleep(" + str(delta_t) + ")\n"
+
+        return tempScript, humidScript
     
     @Slot(bool)
     def humidityOptionChecked(self, val):

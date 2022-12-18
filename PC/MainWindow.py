@@ -173,11 +173,18 @@ class Ui_MainWindow(object):
         self.actionExit.setObjectName("actionExit")
         self.actionImport_xml_config_file = QtWidgets.QAction(MainWindow)
         self.actionImport_xml_config_file.setObjectName("actionImport_xml_config_file")
+        self.actionSave_script = QtWidgets.QAction(MainWindow)
+        self.actionSave_script.setObjectName("actionSave_script")
+        self.actionOpen_script = QtWidgets.QAction(MainWindow)
+        self.actionOpen_script.setObjectName("actionOpen_script")
         self.menuFile.addAction(self.actionConnect_to_server)
         self.menuFile.addAction(self.action_checkConnection)
         self.menuFile.addAction(self.actionClose_connection)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionImport_xml_config_file)
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionSave_script)
+        self.menuFile.addAction(self.actionOpen_script)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -216,6 +223,8 @@ class Ui_MainWindow(object):
         self.actionClose_connection.setText(_translate("MainWindow", "Close connection"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionImport_xml_config_file.setText(_translate("MainWindow", "Import .xml config file"))
+        self.actionSave_script.setText(_translate("MainWindow", "Save script..."))
+        self.actionOpen_script.setText(_translate("MainWindow", "Open script..."))
 
 
 if __name__ == "__main__":

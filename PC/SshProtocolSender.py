@@ -20,6 +20,15 @@ class SshProtocolSender:
             print(Exception)
             return "Response error"
 
+    def execScript(self, script):
+        try:
+            cmd = "python3 ~/chamber_script.py \"" + script + "\" &"
+            ssh_stdin, ssh_stdout, ssh_stderr = self.ssh.exec_command(cmd, timeout=10)
+            return ssh_stdout.readlines()
+        except Exception:
+            print(Exception)
+            return "Response error"
+
     def checkConnection(self) -> bool:
         try:
             return self.ssh.get_transport().is_active()
