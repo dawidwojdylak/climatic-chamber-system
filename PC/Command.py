@@ -63,11 +63,16 @@ class Command:
                 if arg.argType == "user_value":
                     if arg.min != None and float(value) < arg.min:
                         self.badRequest = True
+                        print(value, arg.min)
                         return
                     if arg.max != None and float(value) > arg.max:
                         self.badRequest = True
+                        print(value, arg.max)
                         return
-                    arg.arg = '%.2f' % value
+                    if float(value) < 300.:
+                        arg.arg = '%.2f' % float(value)
+                    else:
+                        arg.arg = '%.1f' % float(value)
             self.badRequest = False
         except Exception as e:
             print(e)

@@ -6,17 +6,14 @@ import sys
 
 
 class TestXmlParser(unittest.TestCase):
-
-    def setUp(self):
+    
+    @classmethod
+    def setUpClass(self):
         self.xmlParser = XmlProtocolParser()
         self.commands = self.xmlParser.importCommandsFromXml()
 
     def test_read_time(self):
         self.assertEqual(self.xmlParser.getCommand("read_time").prepareRequest(), "T") # should be "T"
-
-    def test_set_time(self):
-        self.xmlParser.getCommand("set_time").setValue("101112082915")  # 10.11.2012 08:29:15
-        self.assertEqual(self.xmlParser.getCommand("set_time").prepareRequest(), "t101112082915")
 
     def test_read_analog_channels(self):
         # self.assertEqual(self.xmlParser.getCommand("read_temperature") == "A0, doc: A0
@@ -35,10 +32,10 @@ class TestXmlParser(unittest.TestCase):
 
     def test_set_temperature(self):
         self.xmlParser.getCommand("set_temperature").setValue("-12.5")
-        self.assertEqual(self.xmlParser.getCommand("set_temperature").prepareRequest(), "a0 -12.5")
+        self.assertEqual(self.xmlParser.getCommand("set_temperature").prepareRequest(), "a0 -12.50")
 
         self.xmlParser.getCommand("set_temperature").setValue("-75.0")
-        self.assertEqual(self.xmlParser.getCommand("set_temperature").prepareRequest(), "a0 -75.0")
+        self.assertEqual(self.xmlParser.getCommand("set_temperature").prepareRequest(), "a0 -75.00")
 
         # TODO: prepare wrong argument handling
         self.xmlParser.getCommand("set_temperature").setValue("-77.0")
@@ -67,8 +64,6 @@ class TestXmlParser(unittest.TestCase):
         self.assertEqual(self.xmlParser.getCommand("set_humidity").prepareRequest(), None)
 
     def test_set_temperature_gradient_up(self):
-        # TODO check the units
-        # check upper limit
         self.xmlParser.getCommand("set_temperature_gradient_up").setValue("-01.00")
         self.assertEqual(self.xmlParser.getCommand("set_temperature_gradient_up").prepareRequest(), None) # min value = 00.00
 
