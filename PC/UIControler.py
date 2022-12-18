@@ -21,6 +21,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.loginPopUp = Ui_Login()
         # self.loginPopUp.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler("./CtsInterfaceProtocol.xml")
+        self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
         
         self.chartSplitter = QtWidgets.QSplitter(self.ui.ChartTab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
@@ -228,6 +229,7 @@ class UIControler(QtWidgets.QMainWindow):
         fname = QtWidgets.QFileDialog.getOpenFileName(self, 'XML config file', 'c:\\',"xml file (*.xml)")
         self.chamberControler.importXmlFile(fname[0])
         self.updateCommandList()
+        self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
 
     @Slot()
     def onSaveScript(self):

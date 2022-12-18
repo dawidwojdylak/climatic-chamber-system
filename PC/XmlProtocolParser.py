@@ -27,6 +27,7 @@ class XmlProtocolParser:
         """This metod parser XML into Commands (containing Arguments)"""
         root = self.root
         self.ip = None
+        self.chamberName = 'Default name'
         if root.tag == "commands":
             for child in root:
                 if child.tag == "command":
@@ -55,7 +56,8 @@ class XmlProtocolParser:
                     for grandChild in child:
                         if grandChild.tag == "ip":
                             self.ip = grandChild.text
-                            print(self.ip)
+                        elif grandChild.tag == "chamberName":
+                            self.chamberName = grandChild.text
             return self.commands
 
     def getCommands(self):
@@ -64,6 +66,8 @@ class XmlProtocolParser:
         return self.root
     def getIp(self):
         return self.ip
+    def getChamberName(self):
+        return self.chamberName
 
     def getCommand(self, commandName: str):
         """Returns the particular command"""

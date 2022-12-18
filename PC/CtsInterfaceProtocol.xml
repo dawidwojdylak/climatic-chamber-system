@@ -3,6 +3,7 @@
 <!-- - consider adding full names for displaying it in the GUI -->
 <commands>
 	<config>
+		<chamberName>Komora Sala 2.16</chamberName>
 		<ip>10.224.157.83</ip>
 	</config>
 	<command name="read_time">
