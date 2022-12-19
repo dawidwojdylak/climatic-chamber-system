@@ -20,8 +20,9 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self.loginPopUp = Ui_Login()
         # self.loginPopUp.setupUi(self)
+        self.chamberControler = ChamberControler.ChamberControler()
         try:
-            self.chamberControler = ChamberControler.ChamberControler("./CtsInterfaceProtocol.xml")
+            self.chamberControler.importXmlFile("./CtsInterfaceProtocol.xml")
             self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
         except Exception as e:
             self.logError(str(e))
@@ -259,10 +260,10 @@ class UIControler(QtWidgets.QMainWindow):
         fname = QtWidgets.QFileDialog.getOpenFileName(self, 'XML config file', 'c:\\',"xml file (*.xml)")
         try:
             self.chamberControler.importXmlFile(fname[0])
+            self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
         except Exception as e:
             self.logError(str(e))
         self.updateCommandList()
-        self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
 
     @Slot()
     def onSaveScript(self):

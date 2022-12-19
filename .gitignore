@@ -23,3 +23,5 @@ ignore/
 venv/
 .venv/
 .python-version
+PC/build/
+PC/dist/
