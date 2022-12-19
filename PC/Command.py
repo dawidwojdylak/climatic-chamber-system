@@ -52,8 +52,8 @@ class Command:
                 if arg.descr != None:
                     result[arg.descr] = temp_str
             return result
-        except Exception as e:
-            print(str(e))
+        except Exception:
+            raise
 
 
     def setValue(self, value : float) -> None:
@@ -63,19 +63,17 @@ class Command:
                 if arg.argType == "user_value":
                     if arg.min != None and float(value) < arg.min:
                         self.badRequest = True
-                        print(value, arg.min)
                         return
                     if arg.max != None and float(value) > arg.max:
                         self.badRequest = True
-                        print(value, arg.max)
                         return
                     if float(value) < 300.:
                         arg.arg = '%.2f' % float(value)
                     else:
                         arg.arg = '%.1f' % float(value)
             self.badRequest = False
-        except Exception as e:
-            print(e)
+        except Exception:
+            raise
 
     def getName(self):
         return self.name

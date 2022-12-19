@@ -17,8 +17,7 @@ class SshProtocolSender:
             ssh_stdin, ssh_stdout, ssh_stderr = self.ssh.exec_command(cmd, timeout=10)
             return ssh_stdout.readlines()
         except Exception:
-            print(Exception)
-            return "Response error"
+            raise
 
     def execScript(self, script):
         try:
@@ -26,15 +25,13 @@ class SshProtocolSender:
             ssh_stdin, ssh_stdout, ssh_stderr = self.ssh.exec_command(cmd, timeout=10)
             return ssh_stdout.readlines()
         except Exception:
-            print(Exception)
-            return "Response error"
+            raise
 
     def checkConnection(self) -> bool:
         try:
             return self.ssh.get_transport().is_active()
         except Exception as e:
-            print(e)
-            return False
+            raise
 
     def setUsername(self, username):
         self.username = username
@@ -45,11 +42,10 @@ class SshProtocolSender:
     def logIn(self, passwd, username = None, ipAddr = None):
         if username: self.username = username
         if ipAddr:   self.ipAddress = ipAddr
-        print(self.ipAddress, self.username, passwd)
         try:
             self.ssh.connect(self.ipAddress, username=self.username, password=passwd, auth_timeout=10., timeout=10.)
         except Exception as e:
-            print(e)
+            raise
 
     def logOut(self): # important
         self.ssh.close()

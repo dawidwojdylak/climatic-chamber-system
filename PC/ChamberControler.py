@@ -33,9 +33,12 @@ class ChamberControler:
 
     def sendCommandToChamber(self, cmd):
         request = cmd.prepareRequest()
-        # response = self.respSimulator.sendCommand(request)
-        response = self.sshSender.execCommand(request)
-        return cmd.parseChamberResponse(response)
+        try:
+            response = self.sshSender.execCommand(request)
+        except Exception:
+            raise
+        result = cmd.parseChamberResponse(response)
+        return result
 
 
 

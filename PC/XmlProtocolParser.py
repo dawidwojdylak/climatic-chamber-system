@@ -20,8 +20,8 @@ class XmlProtocolParser:
         try:
             self.tree = ET.parse(self.filePath)
             self.root = self.tree.getroot()
-        except Exception as e:
-            print("Exception: " + str(e))
+        except Exception:
+            raise
 
     def importCommandsFromXml(self):
         """This metod parser XML into Commands (containing Arguments)"""

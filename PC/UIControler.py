@@ -161,7 +161,12 @@ class UIControler(QtWidgets.QMainWindow):
         # currentCommand = self.chamberControler.getCommands()[self.selectedCommandIndex]
         # try to optimize this method
         textWindow = self.ui.textBrowser_chamberResponse 
-        if self.chamberControler.sshSender.checkConnection() == False:
+        try:
+            connection = self.chamberControler.sshSender.checkConnection()
+        except Exception as e:
+            self.logError("User is not logged in. Cannot send request.")
+            return
+        if  connection == False:
             self.logError("User is not logged in. Cannot send request.")
             return
         userValue = ''
@@ -169,13 +174,12 @@ class UIControler(QtWidgets.QMainWindow):
             if self.selectedCommand.isUserModifiable():
                 userValue = self.ui.doubleSpinBox_userInput1.value()
                 self.selectedCommand.setValue(userValue)
+            response = self.chamberControler.sendCommandToChamber(self.selectedCommand)
         except Exception as e:
-            print(e)
-            return 
-        response = self.chamberControler.sendCommandToChamber(self.selectedCommand)
+            self.logError(str(e))
+            return
         if type(response) != dict:
             return
-        # textWindow.clear()
         for key, value in response.items():
             textWindow.setFontWeight(50)
             textWindow.insertPlainText(key + ": ")
@@ -184,13 +188,16 @@ class UIControler(QtWidgets.QMainWindow):
         
     @Slot()    
     def onPushButtonClicked_login(self):
-        # print(self.loginPopUp.pwd, self.loginPopUp.login)
-        self.chamberControler.sshSender.logIn(self.loginPopUp.pwd, self.loginPopUp.login)
+        try:
+            self.chamberControler.sshSender.logIn(self.loginPopUp.pwd, self.loginPopUp.login)
+        except Exception as e:
+            self.logError("Cannot login: " + str(e))
+            return
         self.ui.statusbar.showMessage("Logging in...")
         if self.chamberControler.sshSender.checkConnection():
             self.ui.statusbar.showMessage("Logged in succesfully", 4000)
         else:
-            self.printErrorToStatusBar("Login failed")
+            self.logError("Login failed")
             # self.ui.statusbar.showMessage(, 4000)
 
     @Slot()
@@ -221,13 +228,19 @@ class UIControler(QtWidgets.QMainWindow):
     @Slot()
     def onChartSendButtonClicked(self):
         tempScript, humidScript = self.chart.getScripts()
-        self.chamberControler.sshSender.execScript(tempScript)
-        self.chamberControler.sshSender.execScript(humidScript)
+        try:
+            self.chamberControler.sshSender.execScript(tempScript)
+            self.chamberControler.sshSender.execScript(humidScript)
+        except Exception as e:
+            self.logError(str(e))
 
     @Slot()
     def onImportXmlToggled(self):
         fname = QtWidgets.QFileDialog.getOpenFileName(self, 'XML config file', 'c:\\',"xml file (*.xml)")
-        self.chamberControler.importXmlFile(fname[0])
+        try:
+            self.chamberControler.importXmlFile(fname[0])
+        except Exception as e:
+            self.logError(str(e))
         self.updateCommandList()
         self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
 
