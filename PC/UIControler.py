@@ -95,6 +95,15 @@ class UIControler(QtWidgets.QMainWindow):
             item.setToolTip(c.getDescription())
             self.ui.listWidget_commandList.addItem(item)
 
+
+    # @Slot(str)
+    def printErrorToStatusBar(self, msg : str):
+        # self.ui.statusbar.setStyleSheet("color: #ad0c00")
+        # self.ui.statusbar.setStyleSheet("color: rbg(255, 0, 0);")
+        # self.ui.statusbar.setStyleSheet("background-color: rbg(255, 0, 0);")
+        self.ui.statusbar.showMessage(msg, 4000)
+        # self.ui.statusbar.setStyleSheet("color: #000000")
+
     def setVisibleUserInput(self, val : bool):
         layout = self.ui.horizontalLayout_userInput1
         for j in range(layout.count()):
@@ -117,21 +126,22 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_logClear.setVisible(not val)
         
 
-    def logError(self, errorMsg : str):
+    def logError(self, errorMsg : str, timeout=4000):
         t = time.localtime()
         now = time.strftime("%H:%M:%S", t)
         textWindow = self.ui.textBrowser_chamberResponse 
         textWindow.setTextColor(QtGui.QColor('#b00202'))
         textWindow.append("[" + now + "] " + errorMsg)
         textWindow.setTextColor(QtGui.QColor('#000000'))
-        self.ui.statusbar.showMessage(errorMsg, 4000)
+        self.ui.statusbar.showMessage(errorMsg, timeout)
 
-    def logMsg(self, msg : str):
+    def logMsg(self, msg : str, timeout=4000):
         t = time.localtime()
         now = time.strftime("%H:%M:%S", t)
         textWindow = self.ui.textBrowser_chamberResponse
         textWindow.setTextColor(QtGui.QColor('#000000'))
         textWindow.append("[" + now + "] " + msg)
+        self.ui.statusbar.showMessage(msg, timeout)
 
 
     @Slot()
@@ -196,7 +206,7 @@ class UIControler(QtWidgets.QMainWindow):
             return
         self.logMsg("Logging in...")
         if self.chamberControler.sshSender.checkConnection():
-            self.logMsg("Logged in succesfully")
+            self.logMsg("Logged in succesfully", 4000)
         else:
             self.logError("Login failed")
             # self.ui.statusbar.showMessage(, 4000)
@@ -207,13 +217,13 @@ class UIControler(QtWidgets.QMainWindow):
             if self.chamberControler.sshSender.checkConnection():
                 self.logMsg("Connected")
             else:
-                self.ui.statusbar.showMessage("Connection failed", 3000)
+                self.logError("Connection failed", 3000)
         except Exception as e:
             self.logError("Connection failed")
 
     @Slot()
     def onCloseConnectionToggled(self):
-        self.logMsg("Connection closed")
+        self.ui.statusbar.showMessage("Connection closed")
         self.chamberControler.sshSender.logOut()
 
     @Slot()
