@@ -20,3 +20,5 @@ PC/requirements.txt
 PC/chart_test.py
 PC/test.py
 ignore/
+venv/
+.venv/
