@@ -22,3 +22,4 @@ PC/test.py
 ignore/
 venv/
 .venv/
+.python-version

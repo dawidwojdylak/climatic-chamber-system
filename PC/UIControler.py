@@ -20,9 +20,13 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self.loginPopUp = Ui_Login()
         # self.loginPopUp.setupUi(self)
-        self.chamberControler = ChamberControler.ChamberControler("./CtsInterfaceProtocol.xml")
-        self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
-        
+        try:
+            self.chamberControler = ChamberControler.ChamberControler("./CtsInterfaceProtocol.xml")
+            self.setWindowTitle(self.chamberControler.xmlParser.getChamberName())
+        except Exception as e:
+            self.logError(str(e))
+
+
         self.chartSplitter = QtWidgets.QSplitter(self.ui.ChartTab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -77,7 +81,11 @@ class UIControler(QtWidgets.QMainWindow):
 
 
     def updateCommandList(self):
-        commands = self.chamberControler.getCommands()
+        try:
+            commands = self.chamberControler.getCommands()
+        except Exception as e:
+            self.logError(str(e))
+            return
         self.ui.listWidget_commandList.clear()
         for c in commands:
             # try icons
@@ -202,10 +210,13 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onCheckConnectionToggled(self):
-        if self.chamberControler.sshSender.checkConnection():
-            self.ui.statusbar.showMessage("Connected", 3000)
-        else:
-            self.ui.statusbar.showMessage("Connection failed", 3000)
+        try:
+            if self.chamberControler.sshSender.checkConnection():
+                self.ui.statusbar.showMessage("Connected", 3000)
+            else:
+                self.ui.statusbar.showMessage("Connection failed", 3000)
+        except Exception as e:
+            self.logError(str(e))
 
     @Slot()
     def onCloseConnectionToggled(self):
@@ -227,8 +238,8 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onChartSendButtonClicked(self):
-        tempScript, humidScript = self.chart.getScripts()
         try:
+            tempScript, humidScript = self.chart.getScripts()
             self.chamberControler.sshSender.execScript(tempScript)
             self.chamberControler.sshSender.execScript(humidScript)
         except Exception as e:
@@ -252,7 +263,7 @@ class UIControler(QtWidgets.QMainWindow):
         file.write(text)
         file.close()
 
-    @Slot()
+    # @Slot()
     def onOpenScript(self):
         pass
 
