@@ -22,6 +22,10 @@ class Chart(QtChart.QChart):
         self.addSeries(self.lineSeriesHumid)
         self.addSeries(self.scatterSeriesHumid)
 
+        markers = self.legend().markers()
+        markers[0].setVisible(False)
+        markers[2].setVisible(False)
+
         self.xAxis = QtChart.QValueAxis()
         self.xAxis.setMin(0)
         self.xAxis.setMax(100)

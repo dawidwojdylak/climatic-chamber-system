@@ -75,6 +75,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.action_checkConnection.triggered.connect(self.onCheckConnectionToggled)
         self.ui.actionConnect_to_server.triggered.connect(self.loginPopUp.exec)
         self.ui.actionClose_connection.triggered.connect(self.onCloseConnectionToggled)
+        self.ui.pushButton_logout.clicked.connect(self.onCloseConnectionToggled)
         self.ui.actionImport_xml_config_file.triggered.connect(self.onImportXmlToggled)
         self.ui.actionExit.triggered.connect(QtWidgets.QApplication.instance().quit)
 
@@ -201,9 +202,9 @@ class UIControler(QtWidgets.QMainWindow):
         except Exception as e:
             self.logError("Cannot login: " + str(e))
             return
-        self.ui.statusbar.showMessage("Logging in...")
+        self.logMsg("Logging in...")
         if self.chamberControler.sshSender.checkConnection():
-            self.ui.statusbar.showMessage("Logged in succesfully", 4000)
+            self.logMsg("Logged in succesfully")
         else:
             self.logError("Login failed")
             # self.ui.statusbar.showMessage(, 4000)
@@ -212,15 +213,15 @@ class UIControler(QtWidgets.QMainWindow):
     def onCheckConnectionToggled(self):
         try:
             if self.chamberControler.sshSender.checkConnection():
-                self.ui.statusbar.showMessage("Connected", 3000)
+                self.logMsg("Connected")
             else:
                 self.ui.statusbar.showMessage("Connection failed", 3000)
         except Exception as e:
-            self.logError(str(e))
+            self.logError("Connection failed")
 
     @Slot()
     def onCloseConnectionToggled(self):
-        self.ui.statusbar.showMessage("Connection closed", 3000)
+        self.logMsg("Connection closed")
         self.chamberControler.sshSender.logOut()
 
     @Slot()
