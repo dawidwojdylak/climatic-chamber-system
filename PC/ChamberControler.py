@@ -12,9 +12,7 @@ class ChamberControler:
             self.sshSender = ssh.SshProtocolSender(self.ip)
         else:
             self.sshSender = ssh.SshProtocolSender()
-            # raise AssertionError("Unexpected value of 'self.ip'!: ", self.ip)
         # self.respSimulator = simulator.ResponseSimulator()
-        self.currentCommand = None
 
 
     def updateCommandList(self):

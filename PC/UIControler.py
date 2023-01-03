@@ -62,7 +62,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_sendCommand.clicked.connect(self.onPushButton_sendCommandClicked)
         QtWidgets.QShortcut(QKeySequence('Ctrl+Q'), self).activated.connect(QtWidgets.QApplication.instance().quit)
         self.ui.radioButton_chartHumidity.toggled.connect(self.chart.humidityOptionChecked)
-        self.ui.tabWidget.currentChanged.connect(self.setVisibleChartButtons)
+        self.ui.tabWidget.currentChanged.connect(self.setVisibleChartControls)
         # self.ui.pushButton_login.clicked.connect(self.onPushButtonClicked_login)
         self.ui.pushButton_login.clicked.connect(self.loginPopUp.exec)
         self.loginPopUp.accepted.connect(self.onPushButtonClicked_login)
@@ -94,15 +94,6 @@ class UIControler(QtWidgets.QMainWindow):
             item.setToolTip(c.getDescription())
             self.ui.listWidget_commandList.addItem(item)
 
-
-    # @Slot(str)
-    def printErrorToStatusBar(self, msg : str):
-        # self.ui.statusbar.setStyleSheet("color: #ad0c00")
-        # self.ui.statusbar.setStyleSheet("color: rbg(255, 0, 0);")
-        # self.ui.statusbar.setStyleSheet("background-color: rbg(255, 0, 0);")
-        self.ui.statusbar.showMessage(msg, 4000)
-        # self.ui.statusbar.setStyleSheet("color: #000000")
-
     def setVisibleUserInput(self, val : bool):
         layout = self.ui.horizontalLayout_userInput1
         for j in range(layout.count()):
@@ -110,7 +101,7 @@ class UIControler(QtWidgets.QMainWindow):
             if item:
                 item.setVisible(val)
 
-    def setVisibleChartButtons(self, val):
+    def setVisibleChartControls(self, val):
         val = True if val == 0 else 0 # 0 is index of chart tab
         # self.ui.line_chart.setVisible(val)
         self.ui.label_chart.setVisible(val)

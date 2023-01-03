@@ -28,7 +28,6 @@ class Command:
         """Sets type of the command. It can be read-command or set-command"""
         self.userModifiable = True if cmdType == "user_value" else False
 
-    # TODO: correctness check
     def prepareRequest(self) -> str:
         """Returns ready-to-send request"""
         if self.badRequest == True:
