@@ -230,10 +230,27 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onChartSendButtonClicked(self):
+        import re
+        
         try:
             tempScript, humidScript = self.chart.getScripts()
-            self.chamberControler.sshSender.execScript(tempScript)
-            self.chamberControler.sshSender.execScript(humidScript)
+            def parse(scr):
+                scr = scr.splitlines()
+                result = ''
+                for comm in scr:
+                    current = re.split('\\(|\\)', comm)
+                    if current[0] == 'sleep':
+                        result += comm + '\n'
+                    else:
+                        self.selectedCommand = self.chamberControler.getCommand(current[0])
+                        self.selectedCommand.setValue(current[1])
+                        result += 'send(\"' + self.selectedCommand.prepareRequest() + '\")'+ '\n'
+                return result
+            tempScriptParsed = parse(tempScript)
+            humidScriptParsed = parse(humidScript)
+
+            self.chamberControler.sshSender.execScript(tempScriptParsed)
+            self.chamberControler.sshSender.execScript(humidScriptParsed)
         except Exception as e:
             self.logError(str(e))
 

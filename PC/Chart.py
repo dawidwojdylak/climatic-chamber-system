@@ -133,7 +133,6 @@ class Chart(QtChart.QChart):
                 a = (h[i].y() - h[i-1].y()) / (h[i].x() - h[i-1].x())                
                 humidScript += "set_humidity_gradient_down(" + str(-round(a, 2)) + ")\nsleep(" + str(delta_t) + ")\n"
         tempScript = ""
-        print(humidScript)
         h = self.tempPoints
         if h[0].x() > 0:
             tempScript += "sleep(" + str(h[0].x()) + ")\n"

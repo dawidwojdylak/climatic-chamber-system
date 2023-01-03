@@ -38,5 +38,9 @@ class ChamberControler:
         result = cmd.parseChamberResponse(response)
         return result
 
-
+    def getCommand(self, commandName : str):
+        for c in self.commandList:
+            if c.getName() == commandName:
+                return c
+        return None
 
