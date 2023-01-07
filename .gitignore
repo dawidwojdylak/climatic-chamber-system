@@ -25,3 +25,4 @@ venv/
 .python-version
 PC/build/
 PC/dist/
+SERVER/wifi_log.txt
