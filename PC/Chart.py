@@ -148,6 +148,11 @@ class Chart(QtChart.QChart):
                 tempScript += "set_temperature_gradient_down(" + str(-round(a, 2)) + ")\nsleep(" + str(delta_t) + ")\n"
 
         return tempScript, humidScript
+
+    def importScript(self, tempPoints, humidPoints):
+        self.tempPoints = tempPoints
+        self.humidPoints = humidPoints
+        self.drawPoints()
     
     @Slot(bool)
     def humidityOptionChecked(self, val):
@@ -175,3 +180,4 @@ class Chart(QtChart.QChart):
         elif len(self.tempPoints):
             self.tempPoints.pop()
         self.drawPoints()
+        

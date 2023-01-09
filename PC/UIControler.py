@@ -79,6 +79,8 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_logout.clicked.connect(self.onCloseConnectionToggled)
         self.ui.actionImport_xml_config_file.triggered.connect(self.onImportXmlToggled)
         self.ui.actionExit.triggered.connect(QtWidgets.QApplication.instance().quit)
+        self.ui.actionSave_script.triggered.connect(self.onSaveScript)
+        self.ui.actionOpen_script.triggered.connect(self.onOpenScript)
 
 
 
@@ -277,15 +279,43 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onSaveScript(self):
-        name = QtGui.QFileDialog.getSaveFileName(self, 'Save File')
-        file = open(name,'w')
-        text = self.textEdit.toPlainText()
-        file.write(text)
-        file.close()
+        path, filter = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File', filter='*.csv')
+        if not path.endswith(".csv"): path += ".csv"
+        with open(path, 'w') as f:
+            try:
+                writer = csv.writer(f)
+                writer.writerow(['tempVal', 'tempTime'])
+                for i in self.chart.tempPoints:
+                    writer.writerow([i.x(), i.y()])
+                writer.writerow(['humidVal', 'humidTime'])
+                for i in self.chart.humidPoints:
+                    writer.writerow([i.x(), i.y()])
+            except Exception as e:
+                self.logError(str(e))
 
-    # @Slot()
+    @Slot()
     def onOpenScript(self):
-        pass
+        try:
+            path, filter = QtWidgets.QFileDialog.getOpenFileName(self, 'Open csv file', filter='*.csv')
+            with open(path, 'r') as f:
+                reader = csv.reader(f)
+                humidPoints = []
+                tempPoints = []
+                isHumid = False
+                for i in reader:
+                    if i[0] == 'tempVal' and i[1] == 'tempTime':
+                        isHumid = False
+                        continue
+                    elif i[0] == 'humidVal' and i[1] == 'humidTime':
+                        isHumid = True
+                        continue
+                    if isHumid:
+                        humidPoints.append(QtCore.QPointF(float(i[0]), float(i[1])))
+                    else:
+                        tempPoints.append(QtCore.QPointF(float(i[0]), float(i[1])))
+                self.chart.importScript(tempPoints=tempPoints, humidPoints=humidPoints)
+        except Exception as e:
+            self.logError(str(e))
 
 def setUpWindow():
     app = QtWidgets.QApplication(sys.argv)
