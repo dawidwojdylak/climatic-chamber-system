@@ -1,6 +1,5 @@
 import paramiko
 
-
 class SshProtocolSender:
     def __init__(self, ipAddr = '10.224.157.83', usnm = 'test') -> None:
         self.ssh = paramiko.SSHClient()

@@ -15,11 +15,9 @@ import csv
 class UIControler(QtWidgets.QMainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
-        # super(UIControler, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.loginPopUp = Ui_Login()
-        # self.loginPopUp.setupUi(self)
         self.chamberControler = ChamberControler.ChamberControler()
         try:
             self.chamberControler.importXmlFile("./CtsInterfaceProtocol.xml")
@@ -64,7 +62,6 @@ class UIControler(QtWidgets.QMainWindow):
         QtWidgets.QShortcut(QKeySequence('Ctrl+Q'), self).activated.connect(QtWidgets.QApplication.instance().quit)
         self.ui.radioButton_chartHumidity.toggled.connect(self.chart.humidityOptionChecked)
         self.ui.tabWidget.currentChanged.connect(self.setVisibleChartControls)
-        # self.ui.pushButton_login.clicked.connect(self.onPushButtonClicked_login)
         self.ui.pushButton_login.clicked.connect(self.loginPopUp.exec)
         self.loginPopUp.accepted.connect(self.onPushButtonClicked_login)
         self.ui.pushButton_chartClear.clicked.connect(self.chart.clearChart)
@@ -72,7 +69,6 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.pushButton_chartDeleteLast.clicked.connect(self.chart.deleteLastPoint)
         self.ui.pushButton_chartSend.clicked.connect(self.onChartSendButtonClicked)
         self.ui.pushButton_logClear.clicked.connect(self.ui.textBrowser_chamberResponse.clear)
-        # self.chartView.mouseMovedSignal.connect(self.onMouseOnChartMoved)
         self.ui.action_checkConnection.triggered.connect(self.onCheckConnectionToggled)
         self.ui.actionConnect_to_server.triggered.connect(self.loginPopUp.exec)
         self.ui.actionClose_connection.triggered.connect(self.onCloseConnectionToggled)
@@ -92,19 +88,13 @@ class UIControler(QtWidgets.QMainWindow):
             return
         self.ui.listWidget_commandList.clear()
         for c in commands:
-            # try icons
             item = QtWidgets.QListWidgetItem(c.getName().replace("_", " "))
             item.setToolTip(c.getDescription())
             self.ui.listWidget_commandList.addItem(item)
 
 
-    # @Slot(str)
     def printErrorToStatusBar(self, msg : str):
-        # self.ui.statusbar.setStyleSheet("color: #ad0c00")
-        # self.ui.statusbar.setStyleSheet("color: rbg(255, 0, 0);")
-        # self.ui.statusbar.setStyleSheet("background-color: rbg(255, 0, 0);")
         self.ui.statusbar.showMessage(msg, 4000)
-        # self.ui.statusbar.setStyleSheet("color: #000000")
 
     def setVisibleUserInput(self, val : bool):
         layout = self.ui.horizontalLayout_userInput1
@@ -115,7 +105,6 @@ class UIControler(QtWidgets.QMainWindow):
 
     def setVisibleChartControls(self, val):
         val = True if val == 0 else 0 # 0 is index of chart tab
-        # self.ui.line_chart.setVisible(val)
         self.ui.label_chart.setVisible(val)
         self.ui.radioButton_chartHumidity.setVisible(val)
         self.ui.radioButton_chartTemperature.setVisible(val)
@@ -151,7 +140,6 @@ class UIControler(QtWidgets.QMainWindow):
         selectedCommandIndex = self.ui.listWidget_commandList.currentRow() 
         self.selectedCommand = self.chamberControler.getCommands()[selectedCommandIndex]
         self.ui.statusbar.showMessage(self.selectedCommand.getDescription())
-        # TODO: append controls for more than one user arguments
         if self.selectedCommand.isUserModifiable():
             for idx, arg in enumerate(self.selectedCommand.getUserModifiableArguments()):
                 descrStr = arg.descr
@@ -160,19 +148,12 @@ class UIControler(QtWidgets.QMainWindow):
                 self.ui.label_userInput1.setText(descrStr)
                 self.ui.doubleSpinBox_userInput1.setMinimum(arg.min if arg.min != None else 0)
                 self.ui.doubleSpinBox_userInput1.setMaximum(arg.max if arg.max != None else 100)
-
-
             self.setVisibleUserInput(True)
-        #     self.ui.tableWidget_userValue.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Argument"))
-        #     self.ui.tableWidget_userValue.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Value to set"))
-
         else:
             self.setVisibleUserInput(False)
 
     @Slot()
     def onPushButton_sendCommandClicked(self):
-        # currentCommand = self.chamberControler.getCommands()[self.selectedCommandIndex]
-        # try to optimize this method
         textWindow = self.ui.textBrowser_chamberResponse 
         try:
             connection = self.chamberControler.sshSender.checkConnection()
@@ -211,7 +192,6 @@ class UIControler(QtWidgets.QMainWindow):
             self.logMsg("Logged in succesfully", 4000)
         else:
             self.logError("Login failed")
-            # self.ui.statusbar.showMessage(, 4000)
 
     @Slot()
     def onCheckConnectionToggled(self):
@@ -244,7 +224,6 @@ class UIControler(QtWidgets.QMainWindow):
     @Slot()
     def onChartSendButtonClicked(self):
         import re
-        
         try:
             tempScript, humidScript = self.chart.getScripts()
             def parse(scr):
@@ -323,5 +302,3 @@ def setUpWindow():
     uiC.show()
     uiC.updateCommandList() 
     sys.exit(app.exec_())
-
-

@@ -1,9 +1,9 @@
 import XmlProtocolParser as xml
 import SshProtocolSender as ssh
-import ChamberResponseSimulator as simulator
 
 class ChamberControler:
     def updateCommandList(self):
+        """Updates command list and ip"""
         self.commandList = self.xmlParser.getCommands()
         self.ip = self.xmlParser.getIp()
         return self.commandList
@@ -12,6 +12,7 @@ class ChamberControler:
         return self.commandList
 
     def importXmlFile(self, filename):
+        """Imports """
         self.xmlParser = xml.XmlProtocolParser(filename)
         self.xmlParser.importCommandsFromXml()
         self.commandList = self.xmlParser.getCommands()

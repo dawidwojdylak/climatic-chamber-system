@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- TODO: consider adding types for arguments -->
-<!-- - consider adding full names for displaying it in the GUI -->
 <commands>
 	<config>
 		<chamberName>Komora Sala 2.16</chamberName>
@@ -22,30 +20,6 @@
 		</response>
 	</command>
 
-<!-- 	
-	<command name="set_time" type="user_value">
-		<description>Set time for the chamber clock.</description>
-		<request>
-			<argument>t</argument>
-			<argument type="user_value">ddMMyyhhmmss</argument>
-			<argument descr="day">dd</argument>
-			<argument descr="month">MM</argument>
-			<argument descr="year">yy</argument>
-			<argument descr="hour">hh</argument>
-			<argument descr="minute">mm</argument>
-			<argument descr="second">ss</argument>
-		</request>
-		<response>
-			<argument>t</argument>
-			<argument descr="day">dd</argument>
-			<argument descr="month">MM</argument>
-			<argument descr="year">yy</argument>
-			<argument descr="hour">hh</argument>
-			<argument descr="minute">mm</argument>
-			<argument descr="second">ss</argument>
-		</response>
-	</command> -->
-
 	<command name="read_temperature">
 		<description>Read current and set temperature.</description>
 		<request>
@@ -56,7 +30,6 @@
 			<argument>A</argument>
 			<argument>0</argument>
 			<argument type="blank"> </argument>
-			<!-- TODO: UNIT DO ZAIMPLEMENTOWANIA -->
 			<argument descr="actual temperature" unit="celc_deg">yyy.y</argument> 
 			<argument type="blank"> </argument>
 			<argument descr="set temperature" unit="celc_deg">zzz.z</argument>
@@ -159,8 +132,6 @@
 		</response>
 	</command>
 
-	<!-- to be configured -->
-	<!-- TODO to test!!! -->
 	<command name="read_all_channels">
 		<description>Read all chamber channels.</description>
 		<request>
@@ -168,11 +139,9 @@
 			<argument>a</argument>
 		</request>
 		<response>
-			<!--  -->
 		</response>
 	</command>
 
-	<!-- TODO: Handle the error -->
 	<command name="set_temperature" type="user_value">
 		<request>
 			<argument>a</argument>
@@ -207,11 +176,9 @@
 		</request>
 		<response>
 			<argument>u</argument>
-			<!-- <error descr="channel_not_present">x</error> -->
 		</response>
 	</command>
 
-	<!-- Upper limit?? -->
 	<command name="set_temperature_gradient_down" type="user_value">
 		<request>
 			<argument>d</argument>
@@ -221,7 +188,6 @@
 		</request>
 		<response>
 			<argument>d</argument>
-			<!-- <error descr="channel_not_present">x</error> -->
 		</response>
 	</command>
 
@@ -234,7 +200,6 @@
 		</request>
 		<response>
 			<argument>u</argument>
-			<!-- <error descr="channel_not_present">x</error> -->
 		</response>
 	</command>
 
@@ -247,7 +212,6 @@
 		</request>
 		<response>
 			<argument>d</argument>
-			<!-- <error descr="channel_not_present">x</error> -->
 		</response>
 	</command>
 
@@ -316,7 +280,7 @@
 			<argument>R</argument>
 			<argument>0</argument>
 			<argument type="blank"> </argument>
-			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not ;boolean type?? -->
+			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not  -->
 			<argument descr="ramp_management_runs">b</argument> <!--1 if runs, 0 if not -->
 			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_up_in_K_per_min">xxxx.xx</argument>
@@ -334,7 +298,7 @@
 			<argument>R</argument>
 			<argument>1</argument>
 			<argument type="blank"> </argument>
-			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not ;boolean type?? -->
+			<argument descr="ramp_management_active">a</argument> <!--1 if active, 0 if not -->
 			<argument descr="ramp_management_runs">b</argument> <!--1 if runs, 0 if not -->
 			<argument type="blank"> </argument>
 			<argument descr="value_set_for_ramping_up_in_K_per_min">xxxx.xx</argument>
@@ -344,9 +308,6 @@
 	</command> 
 
 	<!-- docs 4.7.2  -->
-	<!-- TODO: implement (nested) argument type with values
-	e.g.  -->
-	<!-- TODO: create responses -->
 	<command name="read_chamber_state">
 		<request>
 			<argument>S</argument>
@@ -401,7 +362,6 @@
 		</response>
 	</command>
 
-	<!-- check if this position is needed and would be used anytime -->
 	<!-- docs 4.9.2/3 -->
 	<command name="read_additional_digital_channels">
 		<request>
@@ -420,12 +380,9 @@
 		<response>
 			<argument>P</argument>
 			<argument descr="number_of_currently_running_program">xxx</argument>
-			<!-- missing info: always in 3 digits, if 000 then mode OFF -->
 		</response>
 	</command>
 	
-	<!-- implement start/stop program? -->
-
 	<command name="read_error_text">
 		<request>
 			<argument>F</argument>

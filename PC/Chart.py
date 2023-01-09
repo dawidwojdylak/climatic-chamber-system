@@ -29,10 +29,6 @@ class Chart(QtChart.QChart):
         self.xAxis = QtChart.QValueAxis()
         self.xAxis.setMin(0)
         self.xAxis.setMax(100)
-        # self.xAxis.setTickAnchor(0.)
-        # self.xAxis.setTickInterval(10.)
-        # self.xAxis.setTickType(QtCore.Qt.QValueAxis.TicksFixed)
-        # self.xAxis.setTickCount(10)
         self.xAxis.setTitleText("Time [min]")
         self.addAxis(self.xAxis, QtCore.Qt.AlignBottom)
 
@@ -116,7 +112,6 @@ class Chart(QtChart.QChart):
         self.yAxis.setMax(80.)
         
     def getScripts(self):
-        # remember to send humid and temp commands simultaneously
         humidScript = ""
         if (len(self.humidPoints) < 1 or len(self.tempPoints) < 1): return
         h = self.humidPoints
@@ -171,7 +166,6 @@ class Chart(QtChart.QChart):
     def scatterEnabled(self, enabled : bool):
         self.scatterEnable = enabled
         self.drawPoints()
-            
 
     @Slot()
     def deleteLastPoint(self):

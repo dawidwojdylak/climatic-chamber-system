@@ -16,8 +16,6 @@ class TestXmlParser(unittest.TestCase):
         self.assertEqual(self.xmlParser.getCommand("read_time").prepareRequest(), "T") # should be "T"
 
     def test_read_analog_channels(self):
-        # self.assertEqual(self.xmlParser.getCommand("read_temperature") == "A0, doc: A0
-
         self.assertEqual(self.xmlParser.getCommand("read_temperature").prepareRequest(), "A0") # doc: A0
         self.assertEqual(self.xmlParser.getCommand("read_humidity").prepareRequest(), "A1")
         self.assertEqual(self.xmlParser.getCommand("read_water_storage").prepareRequest(), "A2")

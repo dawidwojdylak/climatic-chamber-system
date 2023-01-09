@@ -54,7 +54,6 @@ class Command:
         except Exception:
             raise
 
-
     def setValue(self, value : float) -> None:
         """Sets value of argument with range check if needed"""
         try:
@@ -85,7 +84,3 @@ class Command:
 
     def getUserModifiableArguments(self):
         return [r for r in self.request if r.getArgType() == "user_value"]
-
-
-if __name__ == "__main__":
-    arg1 = Argument("T", '', "-2.3", "32.1")

@@ -76,10 +76,3 @@ class XmlProtocolParser:
                 return com
         return None
 
-
-
-if __name__ == "__main__":
-    parser = XmlProtocolParser()
-    rt = parser.getRoot()
-    for cd in rt:
-        print(cd.attrib, cd.tag, cd.text)

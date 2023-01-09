@@ -25,12 +25,6 @@ import UIControler
 # six          1.16.0
 
 
-# TODO:
-# - class diagram (look for desing patterns)
-# - when reading value read also description of argument
-# - prepare wrong argument handling
-# - take chart commands from xml!
-
 def setUp():
     UIControler.setUpWindow()
 

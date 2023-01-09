@@ -31,7 +31,6 @@ class ChartView(QtChart.QChartView):
                 round(self.currentCursorPosOnChart.x(), 1), 
                 round(self.currentCursorPosOnChart.y(),1)
                 )
-
         return super().mousePressEvent(event)
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
@@ -39,7 +38,6 @@ class ChartView(QtChart.QChartView):
             factor = event.angleDelta().y()
             factor = .8 if factor > 0 else 1.2
             self.chart.zoom(factor)
-
         else: 
             self.chart.scroll(self.chart.plotArea().width() / (50*120) * event.angleDelta().y(), 0)
         return super().wheelEvent(event)
@@ -48,7 +46,6 @@ class ChartView(QtChart.QChartView):
         if event.key() == QtCore.Qt.Key_Control:
             self.ctrlClicked = True
         return super().keyPressEvent(event)
-
 
     def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
         if event.key() == QtCore.Qt.Key_Control:
