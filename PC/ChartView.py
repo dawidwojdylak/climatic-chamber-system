@@ -10,6 +10,7 @@ class ChartView(QtChart.QChartView):
         self.ctrlClicked = False
         
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
+        """Overrides the mouse move event to return its position on chart"""
         wPos = event.localPos()
         sPos = self.mapToScene(int(wPos.x()), int(wPos.y()))
         chartItemPos = self.mapFromScene(sPos)
@@ -26,6 +27,7 @@ class ChartView(QtChart.QChartView):
         return super().mouseMoveEvent(event)
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
+        """Overrides the mouse press event to add point on chart"""
         if event.button() == QtCore.Qt.MouseButton.RightButton:
             self.chart.addPoint(
                 round(self.currentCursorPosOnChart.x(), 1), 
@@ -34,6 +36,7 @@ class ChartView(QtChart.QChartView):
         return super().mousePressEvent(event)
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
+        """Overrides the mouse wheel event to scroll or zoom the chart"""
         if self.ctrlClicked:
             factor = event.angleDelta().y()
             factor = .8 if factor > 0 else 1.2
@@ -43,11 +46,13 @@ class ChartView(QtChart.QChartView):
         return super().wheelEvent(event)
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
+        """Activates the wheel zooming option by ctrl press"""
         if event.key() == QtCore.Qt.Key_Control:
             self.ctrlClicked = True
         return super().keyPressEvent(event)
 
     def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
+        """Deactivates the wheel zooming option by ctrl press"""
         if event.key() == QtCore.Qt.Key_Control:
             self.ctrlClicked = False
         return super().keyReleaseEvent(event)

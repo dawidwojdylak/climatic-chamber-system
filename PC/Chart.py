@@ -53,6 +53,7 @@ class Chart(QtChart.QChart):
         self.scatterSeriesHumid.setName("Humidity [%]")
 
     def drawPoints(self):
+        """Draws the point on the chart"""
         self.lineSeriesTemp.clear()
         self.lineSeriesHumid.clear()
         self.scatterSeriesTemp.clear()
@@ -70,6 +71,7 @@ class Chart(QtChart.QChart):
         self.update()
 
     def updateDelta(self):
+        """Updates the difference between last two points added on the chart"""
         delta = -1
         if self.isHumid and len(self.humidPoints) > 1:
             delta = abs(self.humidPoints[-1].x() - self.humidPoints[-2].x())
@@ -78,6 +80,7 @@ class Chart(QtChart.QChart):
         self.parent.onPointAdded(delta)
 
     def addHumidPoint(self, point : QtCore.QPointF):
+        """Appends humidity point and refreshes the chart"""
         HOR_TOL = 2
         if len(self.humidPoints) > 0:
             if abs(self.humidPoints[-1].y() - point.y()) <= HOR_TOL:
@@ -90,6 +93,7 @@ class Chart(QtChart.QChart):
         self.drawPoints()
 
     def addTempPoint(self, point : QtCore.QPointF):
+        """Appends temperature point and refreshes the chart"""
         HOR_TOL = 2
         if len(self.tempPoints) > 0:
             if abs(self.tempPoints[-1].y() - point.y()) <= HOR_TOL:
@@ -100,6 +104,7 @@ class Chart(QtChart.QChart):
         self.drawPoints()
 
     def addPoint(self, x : float, y : float):
+        """Appends single point to the proper list"""
         if self.isHumid:
             self.addHumidPoint(QtCore.QPointF(x, y))
         else:
@@ -107,11 +112,13 @@ class Chart(QtChart.QChart):
         self.updateDelta()
 
     def zoom(self, factor: float) -> None:
+        """Zooms the chart by the factor, applied to X axis only"""
         super().zoom(factor)
         self.yAxis.setMin(-40.)
         self.yAxis.setMax(80.)
         
     def getScripts(self):
+        """Generates scripts from the chart points"""
         humidScript = ""
         if (len(self.humidPoints) < 1 or len(self.tempPoints) < 1): return
         h = self.humidPoints
@@ -145,6 +152,7 @@ class Chart(QtChart.QChart):
         return tempScript, humidScript
 
     def importScript(self, tempPoints, humidPoints):
+        """Imports points from csv file"""
         self.tempPoints = tempPoints
         self.humidPoints = humidPoints
         self.drawPoints()
@@ -156,6 +164,7 @@ class Chart(QtChart.QChart):
 
     @Slot()
     def clearChart(self):
+        """Clears all chart data"""
         self.tempPoints.clear()
         self.humidPoints.clear()
         self.zoomReset()
@@ -169,6 +178,7 @@ class Chart(QtChart.QChart):
 
     @Slot()
     def deleteLastPoint(self):
+        """Deletes last drawn point"""
         if self.isHumid and len(self.humidPoints):
             self.humidPoints.pop()
         elif len(self.tempPoints):

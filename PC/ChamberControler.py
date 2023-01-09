@@ -12,7 +12,7 @@ class ChamberControler:
         return self.commandList
 
     def importXmlFile(self, filename):
-        """Imports """
+        """Imports the XML file via XmlProtocolParser"""
         self.xmlParser = xml.XmlProtocolParser(filename)
         self.xmlParser.importCommandsFromXml()
         self.commandList = self.xmlParser.getCommands()
@@ -25,6 +25,7 @@ class ChamberControler:
         return self.commandList
 
     def sendCommandToChamber(self, cmd):
+        """Sends single command to the chamber"""
         request = cmd.prepareRequest()
         try:
             response = self.sshSender.execCommand(request)
@@ -34,6 +35,7 @@ class ChamberControler:
         return result
 
     def getCommand(self, commandName : str):
+        """Returns Command object by its name"""
         for c in self.commandList:
             if c.getName() == commandName:
                 return c

@@ -11,6 +11,7 @@ class SshProtocolSender:
         self.logOut()
 
     def execCommand(self, command):
+        """Excecutes single command"""
         try:
             cmd = "python3 ~/chamber.py \"" + command + "\""
             ssh_stdin, ssh_stdout, ssh_stderr = self.ssh.exec_command(cmd, timeout=10)
@@ -19,6 +20,7 @@ class SshProtocolSender:
             raise
 
     def execScript(self, script):
+        """Executes script"""
         try:
             cmd = "python3 ~/chamber_script.py \"" + script + "\" &"
             ssh_stdin, ssh_stdout, ssh_stderr = self.ssh.exec_command(cmd, timeout=10)

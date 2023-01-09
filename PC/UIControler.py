@@ -81,6 +81,7 @@ class UIControler(QtWidgets.QMainWindow):
 
 
     def updateCommandList(self):
+        """Updates the command list on GUI"""
         try:
             commands = self.chamberControler.getCommands()
         except Exception as e:
@@ -97,6 +98,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.statusbar.showMessage(msg, 4000)
 
     def setVisibleUserInput(self, val : bool):
+        """Sets visibility of command value input"""
         layout = self.ui.horizontalLayout_userInput1
         for j in range(layout.count()):
             item = layout.itemAt(j).widget()
@@ -104,6 +106,7 @@ class UIControler(QtWidgets.QMainWindow):
                 item.setVisible(val)
 
     def setVisibleChartControls(self, val):
+        """Sets visibility of chart controls when the tab is switched"""
         val = True if val == 0 else 0 # 0 is index of chart tab
         self.ui.label_chart.setVisible(val)
         self.ui.radioButton_chartHumidity.setVisible(val)
@@ -118,6 +121,7 @@ class UIControler(QtWidgets.QMainWindow):
         
 
     def logError(self, errorMsg : str, timeout=4000):
+        """Prints error message to log window and status bar"""
         t = time.localtime()
         now = time.strftime("%H:%M:%S", t)
         textWindow = self.ui.textBrowser_chamberResponse 
@@ -127,6 +131,7 @@ class UIControler(QtWidgets.QMainWindow):
         self.ui.statusbar.showMessage(errorMsg, timeout)
 
     def logMsg(self, msg : str, timeout=4000):
+        """Prints message to log window and status bar"""
         t = time.localtime()
         now = time.strftime("%H:%M:%S", t)
         textWindow = self.ui.textBrowser_chamberResponse
@@ -137,6 +142,7 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onCommandListItemClicked(self):
+        """Trims the GUI controls to curently selected command"""
         selectedCommandIndex = self.ui.listWidget_commandList.currentRow() 
         self.selectedCommand = self.chamberControler.getCommands()[selectedCommandIndex]
         self.ui.statusbar.showMessage(self.selectedCommand.getDescription())
@@ -154,6 +160,7 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onPushButton_sendCommandClicked(self):
+        """Sends command to chamber"""
         textWindow = self.ui.textBrowser_chamberResponse 
         try:
             connection = self.chamberControler.sshSender.checkConnection()
@@ -223,6 +230,7 @@ class UIControler(QtWidgets.QMainWindow):
 
     @Slot()
     def onChartSendButtonClicked(self):
+        """Sends script from chart"""
         import re
         try:
             tempScript, humidScript = self.chart.getScripts()
